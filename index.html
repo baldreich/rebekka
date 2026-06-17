@@ -4,106 +4,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Freitag Nachmittag?</title>
-
+<title>Heute oder Freitag?</title>
 <style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#f8f9ff,#e8ecff);
-    font-family:Arial,sans-serif;
-}
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #ffeef2;
+        padding-top: 100px;
+    }
 
-.card{
-    text-align:center;
-    background:white;
-    padding:40px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.15);
-    width:500px;
-    max-width:90%;
-}
+    h1 {
+        color: #d6336c;
+    }
 
-h1{
-    margin-bottom:40px;
-}
+    button {
+        padding: 15px 30px;
+        font-size: 18px;
+        margin: 10px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+    }
 
-.button-area{
-    position:relative;
-    height:180px;
-}
+    #heute {
+        background: #ff6b9d;
+        color: white;
+    }
 
-button{
-    padding:15px 35px;
-    font-size:20px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    transition:0.2s;
-}
+    #freitag {
+        background: #74c0fc;
+        color: white;
+        position: absolute;
+    }
 
-#yesBtn{
-    background:#4caf50;
-    color:white;
-}
-
-#yesBtn:hover{
-    transform:scale(1.05);
-}
-
-#noBtn{
-    position:absolute;
-    background:#f44336;
-    color:white;
-    left:280px;
-    top:0;
-}
-
-#message{
-    margin-top:25px;
-    font-size:24px;
-    font-weight:bold;
-    color:#4caf50;
-}
+    #nachricht {
+        margin-top: 40px;
+        font-size: 24px;
+        color: #d6336c;
+        font-weight: bold;
+    }
 </style>
 </head>
-
 <body>
 
-<div class="card">
-    <h1>Kommst du am Freitag Nachmittag? 😊</h1>
+<h1>Wann möchtest du mich sehen? ❤️</h1>
 
-    <div class="button-area" id="area">
-        <button id="yesBtn">Ja</button>
-        <button id="noBtn">Nein</button>
-    </div>
+<button id="heute" onclick="zeigeLiebe()">
+    Heute
+</button>
 
-    <div id="message"></div>
-</div>
+<button id="freitag">
+    Freitag
+</button>
+
+<div id="nachricht"></div>
 
 <script>
-const noBtn = document.getElementById("noBtn");
-const area = document.getElementById("area");
-const yesBtn = document.getElementById("yesBtn");
-const message = document.getElementById("message");
+const freitag = document.getElementById("freitag");
 
-function moveButton() {
-    const maxX = area.clientWidth - noBtn.offsetWidth;
-    const maxY = area.clientHeight - noBtn.offsetHeight;
+freitag.addEventListener("mouseover", () => {
+    const maxX = window.innerWidth - 150;
+    const maxY = window.innerHeight - 80;
 
-    noBtn.style.left = Math.random() * maxX + "px";
-    noBtn.style.top = Math.random() * maxY + "px";
-}
-
-noBtn.addEventListener("mouseover", moveButton);
-noBtn.addEventListener("touchstart", moveButton);
-
-yesBtn.addEventListener("click", () => {
-    message.innerHTML = "🎉 Super, ich freue mich auf Freitag Nachmittag!";
+    freitag.style.left = Math.random() * maxX + "px";
+    freitag.style.top = Math.random() * maxY + "px";
 });
+
+function zeigeLiebe() {
+    document.getElementById("nachricht").innerHTML =
+        "❤️ Juhu! Ich freue mich riesig auf heute. Du machst meinen Tag einfach schöner! ❤️";
+}
 </script>
 
 </body>
