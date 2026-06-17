@@ -1,0 +1,81 @@
+```html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heute oder Freitag?</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #ffeef2;
+        padding-top: 100px;
+    }
+
+    h1 {
+        color: #d6336c;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 18px;
+        margin: 10px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+
+    #heute {
+        background: #ff6b9d;
+        color: white;
+    }
+
+    #freitag {
+        background: #74c0fc;
+        color: white;
+        position: absolute;
+    }
+
+    #nachricht {
+        margin-top: 40px;
+        font-size: 24px;
+        color: #d6336c;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<h1>Wann möchtest du mich sehen? ❤️</h1>
+
+<button id="heute" onclick="zeigeLiebe()">
+    Heute
+</button>
+
+<button id="freitag">
+    Freitag
+</button>
+
+<div id="nachricht"></div>
+
+<script>
+const freitag = document.getElementById("freitag");
+
+freitag.addEventListener("mouseover", () => {
+    const maxX = window.innerWidth - 150;
+    const maxY = window.innerHeight - 80;
+
+    freitag.style.left = Math.random() * maxX + "px";
+    freitag.style.top = Math.random() * maxY + "px";
+});
+
+function zeigeLiebe() {
+    document.getElementById("nachricht").innerHTML =
+        "❤️ Juhu! Ich freue mich riesig auf heute. Du machst meinen Tag einfach schöner! ❤️";
+}
+</script>
+
+</body>
+</html>
+```
