@@ -2,87 +2,60 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wer freut sich auf morgen?</title>
-
+<title>Frage</title>
 <style>
     body {
-        font-family: Arial, sans-serif;
         text-align: center;
-        background: #f5f7ff;
-        padding-top: 100px;
+        font-family: Arial, sans-serif;
+        margin-top: 100px;
     }
 
-    h1 {
-        color: #333;
-    }
-
-    .container {
+    #container {
         position: relative;
-        width: 100%;
-        height: 300px;
+        width: 600px;
+        height: 400px;
+        margin: auto;
     }
 
     button {
         padding: 15px 30px;
-        font-size: 18px;
-        border: none;
-        border-radius: 10px;
+        font-size: 20px;
         cursor: pointer;
-        margin: 10px;
-        transition: 0.2s;
     }
 
-    #rebekka {
-        background: #4CAF50;
-        color: white;
-    }
-
-    #thomas {
-        background: #ff5252;
-        color: white;
+    #yesBtn {
         position: absolute;
+        left: 200px;
+        top: 200px;
     }
 
-    #message {
-        margin-top: 40px;
-        font-size: 24px;
-        color: #4CAF50;
-        font-weight: bold;
+    #noBtn {
+        position: absolute;
+        left: 350px;
+        top: 200px;
     }
 </style>
 </head>
 <body>
 
-<h1>Wer freut sich auf morgen? 🎉</h1>
+<h1>Willst du mit mir ausgehen? ❤️</h1>
 
-<div class="container">
-    <button id="rebekka">Rebekka</button>
-    <button id="thomas">Thomas</button>
+<div id="container">
+    <button id="yesBtn" onclick="alert('Super! 😊')">Ja</button>
+    <button id="noBtn">Nein</button>
 </div>
 
-<div id="message"></div>
-
 <script>
-const thomasBtn = document.getElementById("thomas");
+const noBtn = document.getElementById("noBtn");
+const container = document.getElementById("container");
 
-function moveButton() {
-    const maxX = window.innerWidth - 150;
-    const maxY = 250;
+noBtn.addEventListener("mouseover", () => {
+    const maxX = container.clientWidth - noBtn.offsetWidth;
+    const maxY = container.clientHeight - noBtn.offsetHeight;
 
-    thomasBtn.style.left = Math.random() * maxX + "px";
-    thomasBtn.style.top = Math.random() * maxY + "px";
-}
-
-thomasBtn.addEventListener("mouseover", moveButton);
-thomasBtn.addEventListener("click", moveButton);
-
-document.getElementById("rebekka").addEventListener("click", () => {
-    document.getElementById("message").innerHTML =
-        "💖 Natürlich Rebekka! Ich wünsche dir einen wunderschönen Tag morgen voller Freude, guter Laune und vieler schöner Momente! 🌸✨";
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
 });
-
-moveButton();
 </script>
 
 </body>
