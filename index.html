@@ -1,95 +1,89 @@
-```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>wer isch super horny? ❤️</title>
+<title>Wer freut sich auf morgen?</title>
 
 <style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#ffd1dc,#ffb6c1);
-    font-family:Arial,sans-serif;
-    overflow:hidden;
-}
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #f5f7ff;
+        padding-top: 100px;
+    }
 
-.box{
-    text-align:center;
-    background:white;
-    padding:40px;
-    border-radius:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.15);
-}
+    h1 {
+        color: #333;
+    }
 
-h1{
-    color:#ff4d6d;
-    margin-bottom:30px;
-}
+    .container {
+        position: relative;
+        width: 100%;
+        height: 300px;
+    }
 
-button{
-    padding:15px 35px;
-    margin:10px;
-    border:none;
-    border-radius:12px;
-    font-size:20px;
-    cursor:pointer;
-}
+    button {
+        padding: 15px 30px;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 10px;
+        transition: 0.2s;
+    }
 
-#heute{
-    background:#ff4d6d;
-    color:white;
-}
+    #rebekka {
+        background: #4CAF50;
+        color: white;
+    }
 
-#freitag{
-    background:#4dabf7;
-    color:white;
-    position:absolute;
-}
+    #thomas {
+        background: #ff5252;
+        color: white;
+        position: absolute;
+    }
 
-#nachricht{
-    margin-top:25px;
-    font-size:24px;
-    color:#ff4d6d;
-    font-weight:bold;
-}
+    #message {
+        margin-top: 40px;
+        font-size: 24px;
+        color: #4CAF50;
+        font-weight: bold;
+    }
 </style>
 </head>
-
 <body>
 
-<div class="box">
-    <h1>❤️ wer isch super horny? ❤️</h1>
+<h1>Wer freut sich auf morgen? 🎉</h1>
 
-    <button id="Rebekka">Rebekka</button>
-    <button id="Thomas">Thomas</button>
-
-    <div id="nachricht"></div>
+<div class="container">
+    <button id="rebekka">Rebekka</button>
+    <button id="thomas">Thomas</button>
 </div>
 
+<div id="message"></div>
+
 <script>
-const Rebekka = document.getElementById("Rebekka");
+const thomasBtn = document.getElementById("thomas");
 
-function weglaufen() {
-    const x = Math.random() * (window.innerWidth - 140);
-    const y = Math.random() * (window.innerHeight - 80);
+function moveButton() {
+    const maxX = window.innerWidth - 150;
+    const maxY = 250;
 
-    freitag.style.left = x + "px";
-    freitag.style.top = y + "px";
+    thomasBtn.style.left = Math.random() * maxX + "px";
+    thomasBtn.style.top = Math.random() * maxY + "px";
 }
 
-freitag.addEventListener("mouseenter", weglaufen);
+thomasBtn.addEventListener("mouseover", moveButton);
+thomasBtn.addEventListener("click", moveButton);
 
-document.getElementById("Thomas").addEventListener("click", () => {
-    document.getElementById("nachricht").innerHTML =
-        "🥰 war klar  ❤️";
+document.getElementById("rebekka").addEventListener("click", () => {
+    document.getElementById("message").innerHTML =
+        "💖 Natürlich Rebekka! Ich wünsche dir einen wunderschönen Tag morgen voller Freude, guter Laune und vieler schöner Momente! 🌸✨";
 });
+
+moveButton();
 </script>
 
 </body>
 </html>
-```
