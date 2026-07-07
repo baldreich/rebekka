@@ -16,13 +16,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Arial", sans-serif;
+    font-family: Arial, sans-serif;
     overflow: hidden;
 
     background:
-        radial-gradient(circle at top left, #ffd6e0, transparent 35%),
-        radial-gradient(circle at bottom right, #c8f7c5, transparent 35%),
-        radial-gradient(circle at center, #fff3b0, transparent 40%),
+        radial-gradient(circle at 20% 20%, #ffd6e0, transparent 30%),
+        radial-gradient(circle at 80% 80%, #c8f7c5, transparent 30%),
+        radial-gradient(circle at 50% 50%, #fff1b8, transparent 35%),
         #dbeafe;
 }
 
@@ -37,7 +37,7 @@ body {
 
 @keyframes schweben {
     50% {
-        transform: translateY(-8px);
+        transform: translateY(-10px);
     }
 }
 
@@ -45,13 +45,6 @@ h1 {
     color: #e91e63;
     font-size: 32px;
     margin-bottom: 30px;
-}
-
-.buttons {
-    position: relative;
-    width: 330px;
-    height: 80px;
-    margin: auto;
 }
 
 button {
@@ -63,25 +56,22 @@ button {
     color: white;
     font-weight: bold;
     box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    margin: 10px;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.1);
 }
 
 #ja {
     background: #43a047;
-    position: absolute;
-    left: 20px;
-    top: 10px;
 }
 
 #nein {
     background: #ef5350;
     position: absolute;
-    left: 190px;
-    top: 10px;
-    transition: all 0.25s ease;
-}
-
-button:hover {
-    transform: scale(1.08);
+    transition: left 0.25s ease, top 0.25s ease;
 }
 
 
@@ -107,25 +97,28 @@ button:hover {
 .herz {
     font-size: 55px;
     display: inline-block;
-    animation: puls 1s infinite;
+    animation: pulsieren 1s infinite;
 }
 
-@keyframes puls {
+@keyframes pulsieren {
     50% {
-        transform: scale(1.25);
+        transform: scale(1.3);
     }
 }
 
 
 /* Konfetti */
 .konfetti {
-    position: absolute;
-    width: 10px;
-    height: 10px;
+    position: fixed;
+    width: 12px;
+    height: 12px;
     animation: fallen 3s linear forwards;
 }
 
 @keyframes fallen {
+    from {
+        transform: translateY(-20px) rotate(0deg);
+    }
     to {
         transform: translateY(100vh) rotate(720deg);
         opacity: 0;
@@ -135,25 +128,27 @@ button:hover {
 </style>
 </head>
 
+
 <body>
+
 
 <div class="box">
 
-<h1>😊 Kommst du heute?</h1>
+    <h1>😊 Kommst du heute?</h1>
 
-<div class="buttons">
     <button id="ja">Ja ❤️</button>
     <button id="nein">Nein 😢</button>
+
+
+    <div id="nachricht">
+        <div class="herz">💖</div>
+        <br>
+        Super, freut mich! 🥳<br>
+        Bis ca. 17:00 Uhr ⏰😊
+    </div>
+
 </div>
 
-<div id="nachricht">
-    <div class="herz">💖</div>
-    <br>
-    Super, freut mich! 🥳<br>
-    ca. 17:00 Uhr ? ⏰😊
-</div>
-
-</div>
 
 
 <script>
@@ -163,48 +158,44 @@ const ja = document.getElementById("ja");
 const nachricht = document.getElementById("nachricht");
 
 
-// Startposition neben Ja
-nein.style.left = "190px";
-nein.style.top = "10px";
+// Nein startet neben Ja
+nein.style.left = "calc(50% + 70px)";
+nein.style.top = "50%";
 
 
+// Button springt weg
 function neinWeg() {
 
-    // kleine Fluchtbewegung rund um den Ja-Button
-    const positionen = [
-        {x: 150, y: 10},
-        {x: 220, y: 35},
-        {x: 170, y: 45},
-        {x: 240, y: 0},
-        {x: 130, y: 35}
-    ];
+    const maxX = window.innerWidth - nein.offsetWidth - 20;
+    const maxY = window.innerHeight - nein.offsetHeight - 20;
 
-    const neu = positionen[Math.floor(Math.random() * positionen.length)];
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
 
-    nein.style.left = neu.x + "px";
-    nein.style.top = neu.y + "px";
+    nein.style.left = x + "px";
+    nein.style.top = y + "px";
 }
 
 
-// Sobald man ihn berührt -> weg
-nein.addEventListener("mouseenter", neinWeg);
+// Maus kommt hin -> weg
+nein.addEventListener("mouseover", neinWeg);
 
 
-// Sicherheit: niemals klickbar
+// Falls jemand klickt
 nein.addEventListener("click", function(e) {
     e.preventDefault();
     neinWeg();
 });
 
 
-// Handy-Unterstützung
+// Handy
 nein.addEventListener("touchstart", function(e) {
     e.preventDefault();
     neinWeg();
 });
 
 
-// JA gedrückt
+// Ja gedrückt
 ja.addEventListener("click", () => {
 
     ja.style.display = "none";
@@ -214,7 +205,7 @@ ja.addEventListener("click", () => {
 
 
     // Konfetti
-    for(let i = 0; i < 80; i++) {
+    for(let i = 0; i < 100; i++) {
 
         let k = document.createElement("div");
         k.className = "konfetti";
@@ -223,13 +214,21 @@ ja.addEventListener("click", () => {
         k.style.top = "-20px";
 
         k.style.background =
-        ["#ff5252","#4caf50","#2196f3","#ffb300","#9c27b0"]
-        [Math.floor(Math.random()*5)];
+        [
+            "#ff5252",
+            "#4caf50",
+            "#2196f3",
+            "#ffb300",
+            "#9c27b0"
+        ][Math.floor(Math.random()*5)];
+
 
         k.style.animationDuration =
         (2 + Math.random()*3) + "s";
 
+
         document.body.appendChild(k);
+
 
         setTimeout(() => {
             k.remove();
@@ -239,6 +238,7 @@ ja.addEventListener("click", () => {
 });
 
 </script>
+
 
 </body>
 </html>
