@@ -163,59 +163,48 @@ const ja = document.getElementById("ja");
 const nachricht = document.getElementById("nachricht");
 
 
-// Button bewegt sich weg, sobald die Maus in seine Nähe kommt
-function neinSpringt() {
+// Startposition neben Ja
+nein.style.left = "190px";
+nein.style.top = "10px";
 
-    const buttonBereich = document.querySelector(".buttons");
 
-    const maxX = 240;
-    const maxY = 45;
+function neinWeg() {
 
-    let x = Math.random() * maxX;
-    let y = Math.random() * maxY - 20;
+    // kleine Fluchtbewegung rund um den Ja-Button
+    const positionen = [
+        {x: 150, y: 10},
+        {x: 220, y: 35},
+        {x: 170, y: 45},
+        {x: 240, y: 0},
+        {x: 130, y: 35}
+    ];
 
-    nein.style.left = x + "px";
-    nein.style.top = y + "px";
+    const neu = positionen[Math.floor(Math.random() * positionen.length)];
+
+    nein.style.left = neu.x + "px";
+    nein.style.top = neu.y + "px";
 }
 
 
-// Maus-Nähe erkennen
-document.addEventListener("mousemove", (e) => {
-
-    const rect = nein.getBoundingClientRect();
-
-    const abstandX = Math.abs(
-        e.clientX - (rect.left + rect.width / 2)
-    );
-
-    const abstandY = Math.abs(
-        e.clientY - (rect.top + rect.height / 2)
-    );
+// Sobald man ihn berührt -> weg
+nein.addEventListener("mouseenter", neinWeg);
 
 
-    // Wenn Maus nahe kommt -> weg damit
-    if (abstandX < 80 && abstandY < 60) {
-        neinSpringt();
-    }
-
-});
-
-
-// Für Handy
-nein.addEventListener("touchstart", (e) => {
+// Sicherheit: niemals klickbar
+nein.addEventListener("click", function(e) {
     e.preventDefault();
-    neinSpringt();
+    neinWeg();
 });
 
 
-// Falls jemand es trotzdem erwischt 😄
-nein.addEventListener("click", (e) => {
+// Handy-Unterstützung
+nein.addEventListener("touchstart", function(e) {
     e.preventDefault();
-    neinSpringt();
+    neinWeg();
 });
 
 
-// Ja gedrückt
+// JA gedrückt
 ja.addEventListener("click", () => {
 
     ja.style.display = "none";
