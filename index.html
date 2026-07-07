@@ -6,129 +6,191 @@
 <title>Kommst du heute?</title>
 
 <style>
-    body {
-        height: 100vh;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #fff5f8;
-        font-family: Arial, sans-serif;
-        overflow: hidden;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    .box {
-        text-align: center;
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Comic Sans MS", "Arial", sans-serif;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a1c4fd);
+}
 
-    h1 {
-        color: #e91e63;
-    }
+.box {
+    background: rgba(255,255,255,0.95);
+    padding: 45px;
+    border-radius: 35px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    animation: schweben 3s infinite ease-in-out;
+}
 
-    button {
-        font-size: 18px;
-        padding: 12px 30px;
-        margin: 15px;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: 0.2s;
+@keyframes schweben {
+    0%,100% {
+        transform: translateY(0);
     }
+    50% {
+        transform: translateY(-10px);
+    }
+}
 
-    #ja {
-        background: #4caf50;
-        color: white;
-    }
+h1 {
+    color: #ff4081;
+    font-size: 34px;
+    margin-bottom: 30px;
+}
 
-    #nein {
-        background: #f44336;
-        color: white;
-        position: absolute;
-    }
+button {
+    font-size: 20px;
+    padding: 14px 35px;
+    margin: 15px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
 
-    #nachricht {
-        display: none;
-        margin-top: 25px;
-        font-size: 22px;
-        color: #4caf50;
-        animation: erscheinen 1s ease, hüpfen 2s infinite;
-    }
+button:hover {
+    transform: scale(1.1);
+}
 
-    @keyframes erscheinen {
-        from {
-            opacity: 0;
-            transform: scale(0.5);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
+#ja {
+    background: linear-gradient(45deg, #43e97b, #38f9d7);
+}
 
-    @keyframes hüpfen {
-        0%, 100% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(-10px);
-        }
-    }
+#nein {
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    position: absolute;
+}
 
-    .herz {
-        font-size: 40px;
-        animation: drehen 1.5s infinite;
-        display: inline-block;
-    }
+#nachricht {
+    display: none;
+    margin-top: 25px;
+    font-size: 24px;
+    color: #ff4081;
+    animation: erscheinen 1s ease;
+}
 
-    @keyframes drehen {
-        0% { transform: rotate(0deg); }
-        50% { transform: rotate(15deg); }
-        100% { transform: rotate(0deg); }
+@keyframes erscheinen {
+    from {
+        opacity: 0;
+        transform: scale(0.3) rotate(-10deg);
     }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+.herz {
+    font-size: 55px;
+    display: inline-block;
+    animation: herz 1s infinite;
+}
+
+@keyframes herz {
+    0%,100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+}
+
+
+/* Konfetti */
+.konfetti {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    animation: fallen 3s linear forwards;
+}
+
+@keyframes fallen {
+    from {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="box">
-    <h1>Kommst du heute? 😊</h1>
+    <h1>🌈 Kommst du heute? 😊</h1>
 
-    <button id="ja">Ja</button>
-    <button id="nein">Nein</button>
+    <button id="ja">Ja ❤️</button>
+    <button id="nein">Nein 😢</button>
 
     <div id="nachricht">
-        <span class="herz">❤️</span><br>
-        Super, freut mich!<br>
-        Bis ca. 17:00 Uhr 😊
+        <div class="herz">💖</div>
+        <br>
+        Super, freut mich! 🥳<br>
+        Bis ca. 17:00 Uhr ⏰😊
     </div>
 </div>
 
 
 <script>
-    const nein = document.getElementById("nein");
-    const ja = document.getElementById("ja");
-    const nachricht = document.getElementById("nachricht");
+const nein = document.getElementById("nein");
+const ja = document.getElementById("ja");
+const nachricht = document.getElementById("nachricht");
 
-    function wegMitNein() {
-        const maxX = window.innerWidth - nein.offsetWidth;
-        const maxY = window.innerHeight - nein.offsetHeight;
 
-        nein.style.left = Math.random() * maxX + "px";
-        nein.style.top = Math.random() * maxY + "px";
+function neinWeg() {
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
+
+    nein.style.left = x + "px";
+    nein.style.top = y + "px";
+}
+
+nein.addEventListener("mouseover", neinWeg);
+nein.addEventListener("touchstart", neinWeg);
+
+
+ja.addEventListener("click", () => {
+
+    ja.style.display = "none";
+    nein.style.display = "none";
+
+    nachricht.style.display = "block";
+
+    // Konfetti starten
+    for(let i = 0; i < 80; i++) {
+        let konfetti = document.createElement("div");
+        konfetti.className = "konfetti";
+
+        konfetti.style.left = Math.random() * 100 + "vw";
+        konfetti.style.background = 
+            ["#ff4081","#4caf50","#2196f3","#ffeb3b","#9c27b0"]
+            [Math.floor(Math.random()*5)];
+
+        konfetti.style.animationDuration =
+            (2 + Math.random()*3) + "s";
+
+        document.body.appendChild(konfetti);
+
+        setTimeout(() => {
+            konfetti.remove();
+        }, 5000);
     }
+});
 
-    nein.addEventListener("mouseover", wegMitNein);
-    nein.addEventListener("touchstart", wegMitNein);
-
-    ja.addEventListener("click", () => {
-        nachricht.style.display = "block";
-        ja.style.display = "none";
-        nein.style.display = "none";
-    });
 </script>
 
 </body>
