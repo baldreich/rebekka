@@ -163,19 +163,59 @@ const ja = document.getElementById("ja");
 const nachricht = document.getElementById("nachricht");
 
 
+// Button bewegt sich weg, sobald die Maus in seine Nähe kommt
 function neinSpringt() {
 
-    // kleine Bewegung rund um den Ja-Button
-    let x = 160 + Math.random() * 100;
-    let y = Math.random() * 35;
+    const buttonBereich = document.querySelector(".buttons");
+
+    const maxX = 240;
+    const maxY = 45;
+
+    let x = Math.random() * maxX;
+    let y = Math.random() * maxY - 20;
 
     nein.style.left = x + "px";
     nein.style.top = y + "px";
 }
 
-nein.addEventListener("mouseover", neinSpringt);
+
+// Maus-Nähe erkennen
+document.addEventListener("mousemove", (e) => {
+
+    const rect = nein.getBoundingClientRect();
+
+    const abstandX = Math.abs(
+        e.clientX - (rect.left + rect.width / 2)
+    );
+
+    const abstandY = Math.abs(
+        e.clientY - (rect.top + rect.height / 2)
+    );
 
 
+    // Wenn Maus nahe kommt -> weg damit
+    if (abstandX < 80 && abstandY < 60) {
+        neinSpringt();
+    }
+
+});
+
+
+// Für Handy
+nein.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    neinSpringt();
+});
+
+
+// Falls jemand es trotzdem erwischt 😄
+nein.addEventListener("click", (e) => {
+    e.preventDefault();
+    neinSpringt();
+});
+
+
+// Ja gedrückt
 ja.addEventListener("click", () => {
 
     ja.style.display = "none";
@@ -184,6 +224,7 @@ ja.addEventListener("click", () => {
     nachricht.style.display = "block";
 
 
+    // Konfetti
     for(let i = 0; i < 80; i++) {
 
         let k = document.createElement("div");
