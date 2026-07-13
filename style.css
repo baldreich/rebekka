@@ -1,1 +1,369 @@
+/* ==========================================
+   Gute Reise Rebekka
+   style.css
+========================================== */
 
+/* ---------- Farben ---------- */
+
+:root {
+
+    --sky-top: #8fd3ff;
+    --sky-bottom: #eef9ff;
+
+    --cloud: rgba(255,255,255,.9);
+
+    --mountain: #8ba7a0;
+    --mountain-dark: #6d8781;
+
+    --forest: #3d6f46;
+
+    --grass: #8bcf78;
+
+    --text: #27313a;
+
+    --white: white;
+
+    --shadow: rgba(0,0,0,.15);
+
+}
+
+/* ---------- Reset ---------- */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+
+    width:100%;
+    height:100%;
+
+    overflow:hidden;
+
+    font-family:
+
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color:var(--text);
+
+}
+
+/* ---------- Hintergrund ---------- */
+
+body{
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            var(--sky-top),
+            var(--sky-bottom)
+        );
+
+}
+
+/* ---------- Himmel ---------- */
+
+#sky{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:-100;
+
+}
+
+/* ---------- Sonne ---------- */
+
+#sun{
+
+    position:absolute;
+
+    top:60px;
+    right:80px;
+
+    width:120px;
+    height:120px;
+
+    border-radius:50%;
+
+    background:#fff5ad;
+
+    filter:blur(2px);
+
+    box-shadow:
+
+        0 0 60px #fff5ad,
+        0 0 140px #fff3a0;
+
+}
+
+/* ---------- Hauptszene ---------- */
+
+#scene{
+
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+}
+
+/* ---------- Überschrift ---------- */
+
+#intro{
+
+    position:absolute;
+
+    top:40px;
+
+    width:100%;
+
+    text-align:center;
+
+}
+
+#intro h1{
+
+    font-size:4rem;
+
+    letter-spacing:4px;
+
+    font-weight:700;
+
+    color:white;
+
+    text-shadow:
+
+        0 3px 8px rgba(0,0,0,.25);
+
+}
+
+/* ---------- Zürich ---------- */
+
+#zurich{
+
+    position:absolute;
+
+    left:0;
+    bottom:0;
+
+    width:28%;
+    height:38%;
+
+}
+
+/* ---------- Kanada ---------- */
+
+#canada{
+
+    position:absolute;
+
+    right:0;
+    bottom:0;
+
+    width:30%;
+    height:42%;
+
+}
+
+/* ---------- Welt ---------- */
+
+#world{
+
+    position:absolute;
+
+    left:50%;
+    top:52%;
+
+    transform:translate(-50%,-50%);
+
+    width:70%;
+    height:55%;
+
+}
+
+/* ---------- Flugzeug ---------- */
+
+#plane{
+
+    position:absolute;
+
+    left:120px;
+    top:60%;
+
+    width:140px;
+
+    transform-origin:center;
+
+    transition:transform .3s;
+
+}
+
+#plane img{
+
+    width:100%;
+
+    display:block;
+
+}
+
+/* ---------- Flugroute ---------- */
+
+#flight-svg{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+}
+
+#flight-path{
+
+    fill:none;
+
+    stroke:white;
+
+    stroke-width:4;
+
+    stroke-dasharray:12 12;
+
+    opacity:.9;
+
+}
+
+/* ---------- Comicfigur ---------- */
+
+#friend{
+
+    position:absolute;
+
+    left:40px;
+
+    bottom:35px;
+
+    width:220px;
+
+}
+
+#friend img{
+
+    width:100%;
+
+}
+
+/* ---------- Herz ---------- */
+
+#heart{
+
+    position:absolute;
+
+    left:140px;
+    top:-20px;
+
+    width:34px;
+    height:34px;
+
+    opacity:0;
+
+}
+
+/* ---------- Abschied ---------- */
+
+#message{
+
+    position:absolute;
+
+    width:100%;
+
+    bottom:70px;
+
+    text-align:center;
+
+    opacity:0;
+
+}
+
+#message h2{
+
+    font-size:2.7rem;
+
+}
+
+#message span{
+
+    color:#d6336c;
+
+}
+
+#message p{
+
+    margin-top:15px;
+
+    font-size:1.3rem;
+
+}
+
+/* ---------- Wolkenebenen ---------- */
+
+#cloud-layer-back,
+#cloud-layer-front{
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+}
+
+#cloud-layer-back{
+
+    opacity:.45;
+
+}
+
+#cloud-layer-front{
+
+    opacity:.8;
+
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width:900px){
+
+    #intro h1{
+
+        font-size:2.6rem;
+
+    }
+
+    #plane{
+
+        width:95px;
+
+    }
+
+    #friend{
+
+        width:140px;
+
+    }
+
+    #message h2{
+
+        font-size:1.8rem;
+
+    }
+
+}
