@@ -1,244 +1,182 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kommst du heute?</title>
 
-<style>
-* {
-    box-sizing: border-box;
-}
+    <meta charset="UTF-8">
 
-body {
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    background:
-        radial-gradient(circle at 20% 20%, #ffd6e0, transparent 30%),
-        radial-gradient(circle at 80% 80%, #c8f7c5, transparent 30%),
-        radial-gradient(circle at 50% 50%, #fff1b8, transparent 35%),
-        #dbeafe;
-}
+    <title>Gute Reise, Rebekka ❤️</title>
 
-.box {
-    background: rgba(255,255,255,0.95);
-    padding: 45px;
-    border-radius: 30px;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    animation: schweben 3s infinite ease-in-out;
-}
+    <meta name="description"
+          content="Eine kleine animierte Abschiedsreise von Zürich nach Kanada.">
 
-@keyframes schweben {
-    50% {
-        transform: translateY(-10px);
-    }
-}
+    <link rel="icon" href="assets/favicon.svg">
 
-h1 {
-    color: #e91e63;
-    font-size: 32px;
-    margin-bottom: 30px;
-}
+    <link rel="stylesheet"
+          href="style.css">
 
-button {
-    font-size: 20px;
-    padding: 14px 35px;
-    border: none;
-    border-radius: 40px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    margin: 10px;
-    transition: transform 0.2s;
-}
-
-button:hover {
-    transform: scale(1.1);
-}
-
-#ja {
-    background: #43a047;
-}
-
-#nein {
-    background: #ef5350;
-    position: absolute;
-    transition: left 0.25s ease, top 0.25s ease;
-}
-
-
-#nachricht {
-    display: none;
-    margin-top: 25px;
-    font-size: 24px;
-    color: #e91e63;
-    animation: erscheinen 0.8s ease;
-}
-
-@keyframes erscheinen {
-    from {
-        opacity: 0;
-        transform: scale(0.4);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.herz {
-    font-size: 55px;
-    display: inline-block;
-    animation: pulsieren 1s infinite;
-}
-
-@keyframes pulsieren {
-    50% {
-        transform: scale(1.3);
-    }
-}
-
-
-/* Konfetti */
-.konfetti {
-    position: fixed;
-    width: 12px;
-    height: 12px;
-    animation: fallen 3s linear forwards;
-}
-
-@keyframes fallen {
-    from {
-        transform: translateY(-20px) rotate(0deg);
-    }
-    to {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-    }
-}
-
-</style>
 </head>
-
 
 <body>
 
+    <!-- Hintergrund -->
 
-<div class="box">
+    <div id="sky"></div>
 
-    <h1>😊 Kommst du heute?</h1>
+    <div id="sun"></div>
 
-    <button id="ja">Ja ❤️</button>
-    <button id="nein">Nein 😢</button>
+    <div id="cloud-layer-back"></div>
 
-
-    <div id="nachricht">
-        <div class="herz">💖</div>
-        <br>
-        Super, freut mich! 🥳<br>
-        Ca. 17:00 Uhr ? ⏰😊
-    </div>
-
-</div>
+    <div id="cloud-layer-front"></div>
 
 
 
-<script>
+    <!-- Hauptszene -->
 
-const nein = document.getElementById("nein");
-const ja = document.getElementById("ja");
-const nachricht = document.getElementById("nachricht");
+    <main id="scene">
 
+        <!-- Überschrift -->
 
-// Nein startet neben Ja
-nein.style.left = "calc(50% + 70px)";
-nein.style.top = "50%";
+        <section id="intro">
 
+            <h1>Dienstag</h1>
 
-// Button springt weg
-function neinWeg() {
-
-    const maxX = window.innerWidth - nein.offsetWidth - 20;
-    const maxY = window.innerHeight - nein.offsetHeight - 20;
-
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-
-    nein.style.left = x + "px";
-    nein.style.top = y + "px";
-}
+        </section>
 
 
-// Maus kommt hin -> weg
-nein.addEventListener("mouseover", neinWeg);
+
+        <!-- Zürich -->
+
+        <section id="zurich">
+
+            <div id="mountains-left"></div>
+
+            <div id="city-left"></div>
+
+            <div id="lake-left"></div>
+
+        </section>
 
 
-// Falls jemand klickt
-nein.addEventListener("click", function(e) {
-    e.preventDefault();
-    neinWeg();
-});
+
+        <!-- Karte -->
+
+        <section id="world">
+
+            <svg id="flight-svg">
+
+                <!-- Flugroute -->
+
+                <path
+                    id="flight-path"
+                    d=""
+                />
+
+            </svg>
+
+            <div id="map-container"></div>
+
+        </section>
 
 
-// Handy
-nein.addEventListener("touchstart", function(e) {
-    e.preventDefault();
-    neinWeg();
-});
+
+        <!-- Flugzeug -->
+
+        <section id="plane-section">
+
+            <div id="plane">
+
+                <img
+                    src="assets/plane.svg"
+                    alt="Flugzeug">
+
+            </div>
+
+        </section>
 
 
-// Ja gedrückt
-ja.addEventListener("click", () => {
 
-    ja.style.display = "none";
-    nein.style.display = "none";
+        <!-- Passagiere -->
 
-    nachricht.style.display = "block";
+        <section id="passengers">
 
+            <div id="window-rebekka"></div>
 
-    // Konfetti
-    for(let i = 0; i < 100; i++) {
+            <div id="window-boy"></div>
 
-        let k = document.createElement("div");
-        k.className = "konfetti";
+            <div id="window-girl"></div>
 
-        k.style.left = Math.random() * 100 + "vw";
-        k.style.top = "-20px";
-
-        k.style.background =
-        [
-            "#ff5252",
-            "#4caf50",
-            "#2196f3",
-            "#ffb300",
-            "#9c27b0"
-        ][Math.floor(Math.random()*5)];
+        </section>
 
 
-        k.style.animationDuration =
-        (2 + Math.random()*3) + "s";
+
+        <!-- Comicfigur -->
+
+        <section id="friend">
+
+            <img
+                src="assets/comic-person.svg"
+                alt="Comicfigur">
+
+            <div id="heart"></div>
+
+        </section>
 
 
-        document.body.appendChild(k);
+
+        <!-- Kanada -->
+
+        <section id="canada">
+
+            <div id="mountains-right"></div>
+
+            <div id="forest-right"></div>
+
+            <div id="maple-leaf"></div>
+
+        </section>
 
 
-        setTimeout(() => {
-            k.remove();
-        }, 5000);
-    }
 
-});
+        <!-- Abschied -->
 
-</script>
+        <section id="message">
 
+            <h2>
+
+                Gute Reise,
+
+                <span>Rebekka ❤️</span>
+
+            </h2>
+
+            <p>
+
+                Wir vermissen euch jetzt schon.
+
+            </p>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- Optional später Musik -->
+
+    <audio
+        id="music"
+        preload="auto">
+
+    </audio>
+
+
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>
