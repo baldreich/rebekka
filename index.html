@@ -85,17 +85,125 @@
 
         <!-- Flugzeug -->
 
-        <section id="plane-section">
+<section id="plane-section">
 
-            <div id="plane">
+<div id="plane">
 
-                <img
-                    src="assets/plane.svg"
-                    alt="Flugzeug">
+<svg id="plane-svg"
+     viewBox="0 0 520 180">
 
-            </div>
+    <!-- Flugzeugrumpf -->
 
-        </section>
+    <rect
+        x="40"
+        y="60"
+        rx="45"
+        ry="45"
+        width="360"
+        height="70"
+        fill="#ffffff"
+        stroke="#d6d6d6"
+        stroke-width="3"/>
+
+    <!-- Nase -->
+
+    <ellipse
+        cx="400"
+        cy="95"
+        rx="45"
+        ry="35"
+        fill="#ffffff"
+        stroke="#d6d6d6"
+        stroke-width="3"/>
+
+    <!-- Heck -->
+
+    <polygon
+        points="
+            40,65
+            5,20
+            50,40
+        "
+        fill="#d62828"/>
+
+    <!-- Höhenleitwerk -->
+
+    <polygon
+        points="
+            55,125
+            5,155
+            70,135
+        "
+        fill="#d62828"/>
+
+    <!-- Tragfläche -->
+
+    <polygon
+        points="
+            175,95
+            265,25
+            320,35
+            240,95
+        "
+        fill="#f2f2f2"
+        stroke="#cccccc"/>
+
+    <!-- Untere Tragfläche -->
+
+    <polygon
+        points="
+            190,100
+            285,145
+            250,155
+            150,105
+        "
+        fill="#ececec"
+        stroke="#cccccc"/>
+
+    <!-- Fenster -->
+
+    <circle id="window1"
+            cx="150"
+            cy="95"
+            r="14"
+            fill="#78c7ff"/>
+
+    <circle id="window2"
+            cx="200"
+            cy="95"
+            r="14"
+            fill="#78c7ff"/>
+
+    <circle id="window3"
+            cx="250"
+            cy="95"
+            r="14"
+            fill="#78c7ff"/>
+
+    <!-- Cockpit -->
+
+    <path
+        d="
+        M355 75
+        Q390 75 392 95
+        Q375 90 350 90
+        Z"
+        fill="#6fb8ff"/>
+
+    <!-- Triebwerk -->
+
+    <ellipse
+        cx="255"
+        cy="125"
+        rx="18"
+        ry="10"
+        fill="#888"/>
+
+</svg>
+
+</div>
+
+</section>
 
 
 
