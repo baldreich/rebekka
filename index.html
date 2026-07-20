@@ -261,27 +261,9 @@ max-height:80vh;
 
 overflow-y:auto;
 
+scroll-behavior:smooth;
+
 background:white;
-
-border-radius:20px;
-
-padding:40px;
-
-opacity:0;
-
-transform:
-scale(.7)
-translateY(50px);
-
-transition:
-all 1s ease;
-
-box-shadow:
-0 30px 70px rgba(0,0,0,.25);
-
-z-index:10;
-
-}
 
 
 
@@ -576,7 +558,7 @@ document
 
 
 
-setTimeout(()=>{
+setTimeout(typeText,55);
 
 
 document
@@ -603,29 +585,31 @@ typeText();
 
 function typeText(){
 
-
-if(i<message.length){
-
-
-document
-.getElementById("text")
-.innerHTML += message.charAt(i);
+const textElement = document.getElementById("text");
+const letter = document.getElementById("letter");
 
 
-i++;
+if(i < message.length){
+
+    textElement.textContent += message.charAt(i);
+
+    i++;
+
+    // sanft nach unten scrollen
+    letter.scrollTo({
+        top: letter.scrollHeight,
+        behavior: "smooth"
+    });
 
 
-setTimeout(
-typeText,
-35
-);
-
+    setTimeout(
+        typeText,
+        35
+    );
 
 }
 
-
 }
-
 
 
 function createHeart(){
