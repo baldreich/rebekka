@@ -1,210 +1,903 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Für Rebekka ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 
 <style>
+
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Poppins,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins", sans-serif;
 }
+
 
 body{
-height:100vh;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#ff9ec4,#ffc7df,#d6d7ff);
-background-size:300% 300%;
-animation:bg 12s ease infinite;
+
+    height:100vh;
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ffc1d9,
+        #ffd9e8,
+        #c9d8ff,
+        #e8c8ff
+    );
+
+    background-size:400% 400%;
+
+    animation:backgroundMove 15s ease infinite;
+
 }
 
-@keyframes bg{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
+
+@keyframes backgroundMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
 }
 
-.card{
-position:relative;
-width:min(90%,420px);
-padding:40px;
-border-radius:28px;
-background:rgba(255,255,255,.18);
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
-border:1px solid rgba(255,255,255,.35);
-box-shadow:0 20px 60px rgba(0,0,0,.18);
-text-align:center;
-z-index:2;
+
+
+.container{
+
+    position:relative;
+
+    width:min(92%,520px);
+
+    text-align:center;
+
+    z-index:5;
+
 }
 
-h1{
-font-size:2rem;
-margin-bottom:12px;
-color:white;
+
+
+.title{
+
+    color:white;
+
+    font-size:2.5rem;
+
+    margin-bottom:35px;
+
+    text-shadow:
+    0 4px 20px rgba(0,0,0,.15);
+
 }
 
-p{
-color:white;
-opacity:.95;
-line-height:1.7;
-margin-bottom:28px;
+
+
+/* --------------------
+   BRIEFUMSCHLAG
+-------------------- */
+
+
+.envelope{
+
+    position:relative;
+
+    width:360px;
+
+    height:240px;
+
+    max-width:90vw;
+
+    margin:auto;
+
+    cursor:pointer;
+
+    perspective:1000px;
+
 }
 
-button{
-border:none;
-padding:15px 28px;
-border-radius:40px;
-font-size:1rem;
-font-weight:600;
-cursor:pointer;
-background:white;
-color:#ff4b91;
-transition:.25s;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+
+.back{
+
+    position:absolute;
+
+    inset:0;
+
+    background:#f8a8c8;
+
+    border-radius:15px;
+
+    box-shadow:
+    0 25px 50px rgba(0,0,0,.2);
+
 }
 
-button:hover{
-transform:translateY(-3px) scale(1.03);
+
+
+/* Briefpapier */
+
+.letter{
+
+    position:absolute;
+
+    left:20px;
+
+    right:20px;
+
+    bottom:15px;
+
+    height:190px;
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:25px;
+
+    overflow:hidden;
+
+    transition:all 1s ease;
+
+    transform:translateY(0);
+
+    z-index:2;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.15);
+
 }
 
-.hidden{
-display:none;
-margin-top:28px;
-animation:fade .8s ease;
+
+
+.letter h2{
+
+    color:#ff5c9a;
+
+    font-size:1.3rem;
+
 }
 
-@keyframes fade{
-from{
-opacity:0;
-transform:translateY(10px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+
+
+.letter p{
+
+    margin-top:15px;
+
+    color:#777;
+
+    font-size:.9rem;
+
 }
 
-.bigHeart{
-font-size:4rem;
-animation:pulse 1.4s infinite;
-margin-bottom:15px;
+
+
+
+/* Umschlagklappe */
+
+
+.flap{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:130px;
+
+    background:#ffb6d2;
+
+    clip-path:polygon(
+        0 0,
+        100% 0,
+        50% 100%
+    );
+
+    transform-origin:top;
+
+    transition:
+    transform 1s ease;
+
+    z-index:4;
+
 }
+
+
+
+
+/* Vorderseite */
+
+.front{
+
+    position:absolute;
+
+    inset:0;
+
+    background:#ff9fc4;
+
+    clip-path:polygon(
+        0 100%,
+        50% 45%,
+        100% 100%
+    );
+
+    z-index:3;
+
+}
+
+
+
+
+/* Öffnungsanimation */
+
+
+.envelope.open .flap{
+
+    transform:
+    rotateX(180deg);
+
+}
+
+
+
+.envelope.open .letter{
+
+    transform:
+    translateY(-150px);
+
+    height:420px;
+
+}
+
+
+
+.hint{
+
+    margin-top:40px;
+
+    color:white;
+
+    opacity:.9;
+
+    font-size:.95rem;
+
+    animation:pulse 2s infinite;
+
+}
+
+
 
 @keyframes pulse{
-50%{
-transform:scale(1.15);
-}
+
+    50%{
+
+        opacity:.5;
+
+    }
+
 }
 
-.hearts{
-position:absolute;
-inset:0;
-overflow:hidden;
-pointer-events:none;
-}
 
-.heart{
-position:absolute;
-bottom:-50px;
-font-size:20px;
-animation:float linear forwards;
-opacity:.8;
-}
 
-@keyframes float{
-to{
-transform:translateY(-120vh) rotate(360deg);
-opacity:0;
-}
-}
+/* Hier kommen Teil 2 und 3 */
+
 </style>
+
 </head>
+
 
 <body>
 
-<div class="hearts" id="hearts"></div>
 
-<div class="card">
+<div class="container">
 
-<h1>Für Rebekka 🌸</h1>
+
+<h1 class="title">
+Für Rebekka 🌸
+</h1>
+
+
+<div 
+class="envelope"
+onclick="openEnvelope()"
+id="envelope">
+
+
+<div class="back"></div>
+
+
+<div class="letter">
+
+<h2>
+Ein kleiner Brief ❤️
+</h2>
+
 
 <p>
-Manchmal gibt es keinen besonderen Anlass,
-außer dass man an jemanden denkt.
-Heute bist genau du dieser Gedanke gewesen.
+Öffne mich...
 </p>
 
-<button onclick="showMessage()">
-✨ Kleine Überraschung
-</button>
-
-<div class="hidden" id="msg">
-
-<div class="bigHeart">❤️</div>
-
-<p>
-Ich wollte dir einfach ein kleines Lächeln schenken.
-
-Falls du super geschlafen hast,
-freut mich das.
-
-Falls nicht,
-hoffe ich, dass diese kleine Nachricht ihn wenigstens
-ein kleines bisschen heller macht.
-
-Und falls du dich fragst:
-Ja... ich vermisse dich ein wenig, oder ein wenig mehr 😊
-</p>
 
 </div>
 
+
+<div class="flap"></div>
+
+
+<div class="front"></div>
+
+
 </div>
+
+
+<div class="hint">
+Tippe auf den Briefumschlag ✉️
+</div>
+
+
+</div>
+
+  <!-- =========================
+     TEIL 2/3
+     BRIEF + TEXT + SPOTIFY
+========================= -->
+
+
+<style>
+
+/* Inhalt des geöffneten Briefes */
+
+.letter-content{
+
+    display:none;
+
+    opacity:0;
+
+    transition:
+    opacity 1s ease;
+
+}
+
+
+.envelope.open .letter-content{
+
+    display:block;
+
+    opacity:1;
+
+}
+
+
+
+.letter-title{
+
+    color:#ff5c9a;
+
+    font-size:1.4rem;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.message{
+
+    color:#555;
+
+    line-height:1.8;
+
+    font-size:.95rem;
+
+    white-space:pre-line;
+
+    text-align:left;
+
+}
+
+
+
+.spotify{
+
+    display:inline-block;
+
+    margin-top:25px;
+
+    padding:14px 28px;
+
+    border-radius:50px;
+
+    background:#1DB954;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    box-shadow:
+    0 10px 25px rgba(29,185,84,.35);
+
+}
+
+
+
+.spotify:hover{
+
+    transform:
+    scale(1.05);
+
+}
+
+
+
+.signature{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    color:#ff5c9a;
+
+    font-size:1.1rem;
+
+    font-weight:600;
+
+}
+
+
+</style>
+
+
 
 <script>
 
-const container=document.getElementById("hearts");
+/* Brieftext */
 
-function createHeart(){
+const letterText = `Hey Rebekka,
 
-const h=document.createElement("div");
-h.className="heart";
-h.innerHTML=Math.random()>0.5?"❤️":"🌸";
+eigentlich gibt es gar keinen besonderen Anlass
+für diese kleine Überraschung.
 
-h.style.left=Math.random()*100+"vw";
-h.style.fontSize=(16+Math.random()*22)+"px";
+Außer vielleicht den,
+dass du gerade ziemlich weit weg bist
+und ich gemerkt habe,
+dass hier jemand fehlt.
 
-const duration=5+Math.random()*5;
-h.style.animationDuration=duration+"s";
+Ich hoffe sehr,
+dass du deine Zeit in Kanada genießt,
+viele schöne Momente sammelst
+und jeden Augenblick dort auskostest.
 
-container.appendChild(h);
+Trotzdem freue ich mich schon darauf,
+wenn du wieder zurück bist.
 
-setTimeout(()=>h.remove(),duration*1000);
+Man merkt manchmal erst,
+wie sehr man jemanden vermisst,
+wenn diese Person nicht einfach neben einem ist.
+
+Ich wollte dir einfach ein kleines Lächeln schenken
+und dir sagen,
+dass ich an dich denke.
+
+Pass gut auf dich auf.
+
+Bis ganz bald. ❤️`;
+
+
+
+let letterIndex = 0;
+
+
+
+function showText(){
+
+    const element =
+    document.getElementById("typedText");
+
+
+    if(letterIndex < letterText.length){
+
+        element.innerHTML +=
+        letterText.charAt(letterIndex);
+
+        letterIndex++;
+
+        setTimeout(
+            showText,
+            30
+        );
+
+    }
 
 }
 
-setInterval(createHeart,250);
 
-function showMessage(){
 
-document.getElementById("msg").classList.remove("hidden");
+function openEnvelope(){
 
-for(let i=0;i<30;i++){
 
-setTimeout(createHeart,i*70);
+    const envelope =
+    document.getElementById("envelope");
+
+
+    envelope.classList.add("open");
+
+
+
+    setTimeout(()=>{
+
+
+        document.querySelector(".letter").innerHTML = `
+
+
+        <div class="letter-content">
+
+
+        <div class="letter-title">
+        Für dich ❤️
+        </div>
+
+
+        <div 
+        class="message"
+        id="typedText">
+        </div>
+
+
+
+        <a 
+        class="spotify"
+        href="https://open.spotify.com/track/0MDimlSjIqH6zMGqpfJAew"
+        target="_blank">
+
+        🎵 Just Us
+
+        </a>
+
+
+
+        <div class="signature">
+        Ich freue mich, dich bald wiederzusehen 🤍
+        </div>
+
+
+        </div>
+
+
+        `;
+
+
+        showText();
+
+
+    },800);
+
+
 
 }
 
-}
 </script>
 
+  <!-- =========================
+     TEIL 3/3
+     HERZEN + EFFEKTE
+========================= -->
+
+
+<style>
+
+/* Hintergrund-Partikel */
+
+.particles{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:1;
+
+}
+
+
+
+.particle{
+
+    position:absolute;
+
+    bottom:-30px;
+
+    opacity:.7;
+
+    animation:
+    rise linear forwards;
+
+}
+
+
+
+@keyframes rise{
+
+
+    from{
+
+        transform:
+        translateY(0)
+        rotate(0deg);
+
+        opacity:.8;
+
+    }
+
+
+    to{
+
+        transform:
+        translateY(-120vh)
+        rotate(360deg);
+
+        opacity:0;
+
+    }
+
+
+}
+
+
+
+/* Kleine Lichtpunkte */
+
+
+.sparkle{
+
+    position:absolute;
+
+    width:5px;
+
+    height:5px;
+
+    background:white;
+
+    border-radius:50%;
+
+    opacity:.8;
+
+    animation:
+    twinkle 2s infinite;
+
+}
+
+
+
+@keyframes twinkle{
+
+    50%{
+
+        transform:scale(2);
+
+        opacity:.3;
+
+    }
+
+}
+
+
+
+
+/* Handy Anpassung */
+
+
+@media(max-width:600px){
+
+
+    .title{
+
+        font-size:2rem;
+
+    }
+
+
+    .envelope{
+
+        width:320px;
+
+        height:220px;
+
+    }
+
+
+    .letter{
+
+        padding:20px;
+
+    }
+
+
+    .message{
+
+        font-size:.85rem;
+
+    }
+
+
+}
+
+
+
+</style>
+
+
+
+<div class="particles" id="particles"></div>
+
+
+
+<script>
+
+
+const particleContainer =
+document.getElementById("particles");
+
+
+
+function createParticle(){
+
+
+    const particle =
+    document.createElement("div");
+
+
+    particle.className =
+    "particle";
+
+
+    const symbols =
+    [
+        "❤️",
+        "🌸",
+        "✨",
+        "🤍"
+    ];
+
+
+    particle.innerHTML =
+    symbols[
+        Math.floor(
+            Math.random()*symbols.length
+        )
+    ];
+
+
+
+    particle.style.left =
+    Math.random()*100+"vw";
+
+
+
+    particle.style.fontSize =
+    (12 + Math.random()*18)+"px";
+
+
+
+    const duration =
+    5 + Math.random()*6;
+
+
+
+    particle.style.animationDuration =
+    duration+"s";
+
+
+
+    particleContainer.appendChild(
+        particle
+    );
+
+
+
+    setTimeout(()=>{
+
+
+        particle.remove();
+
+
+    },duration*1000);
+
+
+
+}
+
+
+
+setInterval(
+    createParticle,
+    450
+);
+
+
+
+
+/* Funkelnde Sterne */
+
+function createSparkle(){
+
+
+    const sparkle =
+    document.createElement("div");
+
+
+    sparkle.className =
+    "sparkle";
+
+
+    sparkle.style.left =
+    Math.random()*100+"vw";
+
+
+    sparkle.style.top =
+    Math.random()*100+"vh";
+
+
+    sparkle.style.animationDelay =
+    Math.random()*2+"s";
+
+
+    document.body.appendChild(
+        sparkle
+    );
+
+
+    setTimeout(()=>{
+
+        sparkle.remove();
+
+    },3000);
+
+
+
+}
+
+
+
+setInterval(
+    createSparkle,
+    700
+);
+
+
+
+</script>
+
+
 </body>
+
 </html>
