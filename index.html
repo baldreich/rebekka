@@ -265,7 +265,7 @@ scroll-behavior:smooth;
 
 background:white;
 
-
+}
 
 .full-letter.show{
 
@@ -551,36 +551,23 @@ let i=0;
 
 function openLetter(){
 
+    const envelope = document.getElementById("envelope");
+    const letter = document.getElementById("letter");
 
-document
-.getElementById("envelope")
-.classList.add("open");
-
-
-
-setTimeout(typeText,55);
+    envelope.classList.add("open");
 
 
-document
-.getElementById("envelope")
-.classList.add("hide");
+    setTimeout(()=>{
 
+        envelope.classList.add("hide");
 
+        letter.classList.add("show");
 
-document
-.getElementById("letter")
-.classList.add("show");
+        typeText();
 
-
-
-typeText();
-
-
-},900);
-
+    },900);
 
 }
-
 
 
 function typeText(){
