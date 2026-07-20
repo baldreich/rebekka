@@ -104,15 +104,9 @@ body{
 
     width:360px;
 
-    height:240px;
+    height:260px;
 
-    max-width:90vw;
-
-    margin:auto;
-
-    cursor:pointer;
-
-    perspective:1000px;
+    margin-bottom:280px;
 
 }
 
@@ -142,29 +136,30 @@ body{
     position:absolute;
 
     left:20px;
-
     right:20px;
 
-    bottom:15px;
+    bottom:20px;
 
-    height:190px;
+    min-height:190px;
 
     background:white;
 
-    border-radius:12px;
+    border-radius:14px;
 
     padding:25px;
 
     overflow:hidden;
 
-    transition:all 1s ease;
+    transition:
+    transform 1.2s ease,
+    height 1.2s ease;
 
     transform:translateY(0);
 
     z-index:2;
 
     box-shadow:
-    0 10px 30px rgba(0,0,0,.15);
+    0 15px 40px rgba(0,0,0,.18);
 
 }
 
@@ -266,9 +261,11 @@ body{
 .envelope.open .letter{
 
     transform:
-    translateY(-150px);
+    translateY(-260px);
 
-    height:420px;
+    height:560px;
+
+    overflow-y:auto;
 
 }
 
@@ -403,20 +400,15 @@ Tippe auf den Briefumschlag ✉️
 }
 
 
-
 .message{
 
     color:#555;
 
-    line-height:1.8;
+    line-height:1.9;
 
-    font-size:.95rem;
+    font-size:1rem;
 
-    white-space:pre-line;
-
-    text-align:left;
-
-}
+    padding-bottom:20px;
 
 
 
