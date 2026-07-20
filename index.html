@@ -14,51 +14,51 @@
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Poppins", sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Poppins",sans-serif;
 }
 
 
 body{
 
-    height:100vh;
-    overflow:hidden;
+height:100vh;
+overflow:hidden;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+display:flex;
+justify-content:center;
+align-items:center;
 
-    background:
-    linear-gradient(
-        135deg,
-        #ffc1d9,
-        #ffd9e8,
-        #c9d8ff,
-        #e8c8ff
-    );
+background:
+linear-gradient(
+135deg,
+#ffc1d9,
+#ffd9e8,
+#c9d8ff,
+#e8c8ff
+);
 
-    background-size:400% 400%;
+background-size:400% 400%;
 
-    animation:backgroundMove 15s ease infinite;
+animation:bg 15s ease infinite;
 
 }
 
 
-@keyframes backgroundMove{
+@keyframes bg{
 
-    0%{
-        background-position:0% 50%;
-    }
+0%{
+background-position:0% 50%;
+}
 
-    50%{
-        background-position:100% 50%;
-    }
+50%{
+background-position:100% 50%;
+}
 
-    100%{
-        background-position:0% 50%;
-    }
+100%{
+background-position:0% 50%;
+}
 
 }
 
@@ -66,47 +66,71 @@ body{
 
 .container{
 
-    position:relative;
+width:100%;
+height:100%;
 
-    width:min(92%,520px);
+display:flex;
+justify-content:center;
+align-items:center;
 
-    text-align:center;
-
-    z-index:5;
+position:relative;
 
 }
 
+
+
+
+/* TITEL */
 
 
 .title{
 
-    color:white;
+position:absolute;
 
-    font-size:2.5rem;
+top:70px;
 
-    margin-bottom:35px;
+color:white;
 
-    text-shadow:
-    0 4px 20px rgba(0,0,0,.15);
+font-size:2.4rem;
+
+text-shadow:
+0 5px 20px rgba(0,0,0,.15);
 
 }
 
 
 
-/* --------------------
-   BRIEFUMSCHLAG
--------------------- */
+/* ------------------
+   UMSCHLAG
+------------------ */
 
 
 .envelope{
 
-    position:relative;
+width:360px;
 
-    width:360px;
+height:240px;
 
-    height:260px;
+position:absolute;
 
-    margin-bottom:280px;
+cursor:pointer;
+
+transition:
+opacity 1s ease,
+transform 1s ease;
+
+}
+
+
+.envelope.hide{
+
+opacity:0;
+
+transform:
+scale(.5)
+translateY(-100px);
+
+pointer-events:none;
 
 }
 
@@ -114,158 +138,233 @@ body{
 
 .back{
 
-    position:absolute;
+position:absolute;
 
-    inset:0;
+inset:0;
 
-    background:#f8a8c8;
+background:#f5a6c8;
 
-    border-radius:15px;
+border-radius:15px;
 
-    box-shadow:
-    0 25px 50px rgba(0,0,0,.2);
-
-}
-
-
-
-/* Briefpapier */
-
-.letter{
-
-    position:absolute;
-
-    left:20px;
-    right:20px;
-
-    bottom:20px;
-
-    min-height:190px;
-
-    background:white;
-
-    border-radius:14px;
-
-    padding:25px;
-
-    overflow:hidden;
-
-    transition:
-    transform 1.2s ease,
-    height 1.2s ease;
-
-    transform:translateY(0);
-
-    z-index:2;
-
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.18);
+box-shadow:
+0 25px 50px rgba(0,0,0,.2);
 
 }
 
 
 
-.letter h2{
+.letter-preview{
 
-    color:#ff5c9a;
+position:absolute;
 
-    font-size:1.3rem;
+left:20px;
+
+right:20px;
+
+bottom:15px;
+
+height:170px;
+
+background:white;
+
+border-radius:12px;
+
+padding:20px;
+
+z-index:2;
 
 }
 
 
 
-.letter p{
+.letter-preview h2{
 
-    margin-top:15px;
+color:#ff5c9a;
 
-    color:#777;
-
-    font-size:.9rem;
+font-size:1.2rem;
 
 }
-
-
-
-
-/* Umschlagklappe */
 
 
 .flap{
 
-    position:absolute;
+position:absolute;
 
-    top:0;
+top:0;
 
-    left:0;
+width:100%;
 
-    width:100%;
+height:130px;
 
-    height:130px;
+background:#ffb6d2;
 
-    background:#ffb6d2;
+clip-path:
+polygon(
+0 0,
+100% 0,
+50% 100%
+);
 
-    clip-path:polygon(
-        0 0,
-        100% 0,
-        50% 100%
-    );
+transform-origin:top;
 
-    transform-origin:top;
+transition:
+transform 1s ease;
 
-    transition:
-    transform 1s ease;
-
-    z-index:4;
-
-}
-
-
-
-
-/* Vorderseite */
-
-.front{
-
-    position:absolute;
-
-    inset:0;
-
-    background:#ff9fc4;
-
-    clip-path:polygon(
-        0 100%,
-        50% 45%,
-        100% 100%
-    );
-
-    z-index:3;
+z-index:4;
 
 }
-
-
-
-
-/* Öffnungsanimation */
 
 
 .envelope.open .flap{
 
-    transform:
-    rotateX(180deg);
+transform:
+rotateX(180deg);
 
 }
 
 
 
-.envelope.open .letter{
+.front{
 
-    transform:
-    translateY(-260px);
+position:absolute;
 
-    height:560px;
+inset:0;
 
-    overflow-y:auto;
+background:#ff9fc4;
+
+clip-path:
+polygon(
+0 100%,
+50% 45%,
+100% 100%
+);
+
+z-index:3;
+
+}
+
+
+
+
+/* ------------------
+   ECHTER BRIEF
+------------------ */
+
+
+.full-letter{
+
+position:absolute;
+
+width:min(90%,520px);
+
+max-height:80vh;
+
+overflow-y:auto;
+
+background:white;
+
+border-radius:20px;
+
+padding:40px;
+
+opacity:0;
+
+transform:
+scale(.7)
+translateY(50px);
+
+transition:
+all 1s ease;
+
+box-shadow:
+0 30px 70px rgba(0,0,0,.25);
+
+z-index:10;
+
+}
+
+
+
+.full-letter.show{
+
+opacity:1;
+
+transform:
+scale(1)
+translateY(0);
+
+}
+
+
+
+.full-letter h2{
+
+text-align:center;
+
+color:#ff5c9a;
+
+margin-bottom:25px;
+
+}
+
+
+
+.message{
+
+color:#555;
+
+line-height:1.9;
+
+white-space:pre-line;
+
+font-size:1rem;
+
+}
+
+
+
+.spotify{
+
+display:block;
+
+width:max-content;
+
+margin:30px auto 0;
+
+padding:15px 30px;
+
+border-radius:50px;
+
+background:#1DB954;
+
+color:white;
+
+text-decoration:none;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+
+.spotify:hover{
+
+transform:scale(1.05);
+
+}
+
+
+
+.signature{
+
+text-align:center;
+
+margin-top:25px;
+
+color:#ff5c9a;
+
+font-weight:600;
 
 }
 
@@ -273,33 +372,74 @@ body{
 
 .hint{
 
-    margin-top:40px;
+position:absolute;
 
-    color:white;
+bottom:80px;
 
-    opacity:.9;
+color:white;
 
-    font-size:.95rem;
-
-    animation:pulse 2s infinite;
+opacity:.8;
 
 }
 
 
 
-@keyframes pulse{
+/* HERZEN */
 
-    50%{
 
-        opacity:.5;
+.heart{
 
-    }
+position:fixed;
+
+bottom:-40px;
+
+animation:
+float linear forwards;
+
+z-index:1;
 
 }
 
 
 
-/* Hier kommen Teil 2 und 3 */
+@keyframes float{
+
+to{
+
+transform:
+translateY(-120vh)
+rotate(360deg);
+
+opacity:0;
+
+}
+
+}
+
+
+
+@media(max-width:600px){
+
+.title{
+
+font-size:2rem;
+
+top:40px;
+
+}
+
+
+.full-letter{
+
+padding:25px;
+
+max-height:75vh;
+
+}
+
+
+}
+
 
 </style>
 
@@ -317,26 +457,22 @@ Für Rebekka 🌸
 </h1>
 
 
+
 <div 
 class="envelope"
-onclick="openEnvelope()"
-id="envelope">
+id="envelope"
+onclick="openLetter()">
+
 
 
 <div class="back"></div>
 
 
-<div class="letter">
+<div class="letter-preview">
 
 <h2>
 Ein kleiner Brief ❤️
 </h2>
-
-
-<p>
-Öffne mich...
-</p>
-
 
 </div>
 
@@ -350,128 +486,56 @@ Ein kleiner Brief ❤️
 </div>
 
 
+
+<div class="full-letter" id="letter">
+
+
+<h2>
+Für dich ❤️
+</h2>
+
+
+<div class="message" id="text"></div>
+
+
+
+<a 
+class="spotify"
+href="https://open.spotify.com/track/0MDimlSjIqH6zMGqpfJAew"
+target="_blank">
+
+🎵 Just Us
+
+</a>
+
+
+<div class="signature">
+
+Ich freue mich, dich bald wiederzusehen 🤍
+
+</div>
+
+
+</div>
+
+
+
 <div class="hint">
-Tippe auf den Briefumschlag ✉️
+
+Tippe auf den Umschlag ✉️
+
 </div>
 
 
 </div>
 
-  <!-- =========================
-     TEIL 2/3
-     BRIEF + TEXT + SPOTIFY
-========================= -->
-
-
-<style>
-
-/* Inhalt des geöffneten Briefes */
-
-.letter-content{
-
-    display:none;
-
-    opacity:0;
-
-    transition:
-    opacity 1s ease;
-
-}
-
-
-.envelope.open .letter-content{
-
-    display:block;
-
-    opacity:1;
-
-}
-
-
-
-.letter-title{
-
-    color:#ff5c9a;
-
-    font-size:1.4rem;
-
-    margin-bottom:20px;
-
-}
-
-
-.message{
-
-    color:#555;
-
-    line-height:1.9;
-
-    font-size:1rem;
-
-    padding-bottom:20px;
-
-
-
-.spotify{
-
-    display:inline-block;
-
-    margin-top:25px;
-
-    padding:14px 28px;
-
-    border-radius:50px;
-
-    background:#1DB954;
-
-    color:white;
-
-    text-decoration:none;
-
-    font-weight:600;
-
-    transition:.3s;
-
-    box-shadow:
-    0 10px 25px rgba(29,185,84,.35);
-
-}
-
-
-
-.spotify:hover{
-
-    transform:
-    scale(1.05);
-
-}
-
-
-
-.signature{
-
-    margin-top:25px;
-
-    text-align:center;
-
-    color:#ff5c9a;
-
-    font-size:1.1rem;
-
-    font-weight:600;
-
-}
-
-
-</style>
 
 
 
 <script>
 
-/* Brieftext */
 
-const letterText = `Hey Rebekka,
+const message=`Hey Rebekka,
 
 eigentlich gibt es gar keinen besonderen Anlass
 für diese kleine Überraschung.
@@ -486,10 +550,10 @@ dass du deine Zeit in Kanada genießt,
 viele schöne Momente sammelst
 und jeden Augenblick dort auskostest.
 
-Trotzdem freue ich mich schon darauf,
+Trotzdem freue ich mich schon sehr darauf,
 wenn du wieder zurück bist.
 
-Man merkt manchmal erst,
+Manchmal merkt man erst,
 wie sehr man jemanden vermisst,
 wenn diese Person nicht einfach neben einem ist.
 
@@ -503,377 +567,111 @@ Bis ganz bald. ❤️`;
 
 
 
-let letterIndex = 0;
+let i=0;
 
 
 
-function showText(){
-
-    const element =
-    document.getElementById("typedText");
+function openLetter(){
 
 
-    if(letterIndex < letterText.length){
-
-        element.innerHTML +=
-        letterText.charAt(letterIndex);
-
-        letterIndex++;
-
-        setTimeout(
-            showText,
-            30
-        );
-
-    }
-
-}
+document
+.getElementById("envelope")
+.classList.add("open");
 
 
 
-function openEnvelope(){
+setTimeout(()=>{
 
 
-    const envelope =
-    document.getElementById("envelope");
-
-
-    envelope.classList.add("open");
-
-
-
-    setTimeout(()=>{
-
-
-        document.querySelector(".letter").innerHTML = `
-
-
-        <div class="letter-content">
-
-
-        <div class="letter-title">
-        Für dich ❤️
-        </div>
-
-
-        <div 
-        class="message"
-        id="typedText">
-        </div>
+document
+.getElementById("envelope")
+.classList.add("hide");
 
 
 
-        <a 
-        class="spotify"
-        href="https://open.spotify.com/track/0MDimlSjIqH6zMGqpfJAew"
-        target="_blank">
-
-        🎵 Just Us
-
-        </a>
+document
+.getElementById("letter")
+.classList.add("show");
 
 
 
-        <div class="signature">
-        Ich freue mich, dich bald wiederzusehen 🤍
-        </div>
+typeText();
 
 
-        </div>
-
-
-        `;
-
-
-        showText();
-
-
-    },800);
-
+},900);
 
 
 }
 
-</script>
 
-  <!-- =========================
-     TEIL 3/3
-     HERZEN + EFFEKTE
-========================= -->
 
+function typeText(){
 
-<style>
 
-/* Hintergrund-Partikel */
+if(i<message.length){
 
-.particles{
 
-    position:fixed;
+document
+.getElementById("text")
+.innerHTML += message.charAt(i);
 
-    inset:0;
 
-    overflow:hidden;
+i++;
 
-    pointer-events:none;
 
-    z-index:1;
-
-}
-
-
-
-.particle{
-
-    position:absolute;
-
-    bottom:-30px;
-
-    opacity:.7;
-
-    animation:
-    rise linear forwards;
-
-}
-
-
-
-@keyframes rise{
-
-
-    from{
-
-        transform:
-        translateY(0)
-        rotate(0deg);
-
-        opacity:.8;
-
-    }
-
-
-    to{
-
-        transform:
-        translateY(-120vh)
-        rotate(360deg);
-
-        opacity:0;
-
-    }
-
-
-}
-
-
-
-/* Kleine Lichtpunkte */
-
-
-.sparkle{
-
-    position:absolute;
-
-    width:5px;
-
-    height:5px;
-
-    background:white;
-
-    border-radius:50%;
-
-    opacity:.8;
-
-    animation:
-    twinkle 2s infinite;
-
-}
-
-
-
-@keyframes twinkle{
-
-    50%{
-
-        transform:scale(2);
-
-        opacity:.3;
-
-    }
-
-}
-
-
-
-
-/* Handy Anpassung */
-
-
-@media(max-width:600px){
-
-
-    .title{
-
-        font-size:2rem;
-
-    }
-
-
-    .envelope{
-
-        width:320px;
-
-        height:220px;
-
-    }
-
-
-    .letter{
-
-        padding:20px;
-
-    }
-
-
-    .message{
-
-        font-size:.85rem;
-
-    }
-
-
-}
-
-
-
-</style>
-
-
-
-<div class="particles" id="particles"></div>
-
-
-
-<script>
-
-
-const particleContainer =
-document.getElementById("particles");
-
-
-
-function createParticle(){
-
-
-    const particle =
-    document.createElement("div");
-
-
-    particle.className =
-    "particle";
-
-
-    const symbols =
-    [
-        "❤️",
-        "🌸",
-        "✨",
-        "🤍"
-    ];
-
-
-    particle.innerHTML =
-    symbols[
-        Math.floor(
-            Math.random()*symbols.length
-        )
-    ];
-
-
-
-    particle.style.left =
-    Math.random()*100+"vw";
-
-
-
-    particle.style.fontSize =
-    (12 + Math.random()*18)+"px";
-
-
-
-    const duration =
-    5 + Math.random()*6;
-
-
-
-    particle.style.animationDuration =
-    duration+"s";
-
-
-
-    particleContainer.appendChild(
-        particle
-    );
-
-
-
-    setTimeout(()=>{
-
-
-        particle.remove();
-
-
-    },duration*1000);
-
-
-
-}
-
-
-
-setInterval(
-    createParticle,
-    450
+setTimeout(
+typeText,
+35
 );
 
 
+}
 
 
-/* Funkelnde Sterne */
-
-function createSparkle(){
+}
 
 
-    const sparkle =
-    document.createElement("div");
+
+function createHeart(){
 
 
-    sparkle.className =
-    "sparkle";
+const h=document.createElement("div");
 
 
-    sparkle.style.left =
-    Math.random()*100+"vw";
+h.className="heart";
 
 
-    sparkle.style.top =
-    Math.random()*100+"vh";
+h.innerHTML=
+Math.random()>0.5?
+"❤️":
+"🌸";
 
 
-    sparkle.style.animationDelay =
-    Math.random()*2+"s";
+h.style.left=
+Math.random()*100+"vw";
 
 
-    document.body.appendChild(
-        sparkle
-    );
+h.style.fontSize=
+(15+Math.random()*20)+"px";
 
 
-    setTimeout(()=>{
+let d=
+5+Math.random()*5;
 
-        sparkle.remove();
 
-    },3000);
+h.style.animationDuration=
+d+"s";
 
+
+document.body.appendChild(h);
+
+
+
+setTimeout(()=>{
+
+h.remove();
+
+},d*1000);
 
 
 }
@@ -881,8 +679,8 @@ function createSparkle(){
 
 
 setInterval(
-    createSparkle,
-    700
+createHeart,
+350
 );
 
 
