@@ -1,653 +1,226 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Baby ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-
+<title>Kanada Recap</title>
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:"Poppins",sans-serif;
-}
-
-
-body{
-
-height:100vh;
-overflow:hidden;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-background:
-linear-gradient(
-135deg,
-#ffc1d9,
-#ffd9e8,
-#c9d8ff,
-#e8c8ff
-);
-
-background-size:400% 400%;
-
-animation:bg 15s ease infinite;
-
-}
-
-
-@keyframes bg{
-
-0%{
-background-position:0% 50%;
-}
-
-50%{
-background-position:100% 50%;
-}
-
-100%{
-background-position:0% 50%;
-}
-
-}
-
-
-
-.container{
-
-width:100%;
-height:100%;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-position:relative;
-
-}
-
-
-
-
-/* TITEL */
-
-
-.title{
-
-position:absolute;
-
-top:70px;
-
-color:white;
-
-font-size:2.4rem;
-
-text-shadow:
-0 5px 20px rgba(0,0,0,.15);
-
-}
-
-
-
-/* ------------------
-   UMSCHLAG
------------------- */
-
-
-.envelope{
-
-width:360px;
-
-height:240px;
-
-position:absolute;
-
-cursor:pointer;
-
-transition:
-opacity 1s ease,
-transform 1s ease;
-
-}
-
-
-.envelope.hide{
-
-opacity:0;
-
-transform:
-scale(.5)
-translateY(-100px);
-
-pointer-events:none;
-
-}
-
-
-
-.back{
-
-position:absolute;
-
-inset:0;
-
-background:#f5a6c8;
-
-border-radius:15px;
-
-box-shadow:
-0 25px 50px rgba(0,0,0,.2);
-
-}
-
-
-
-.letter-preview{
-
-position:absolute;
-
-left:20px;
-
-right:20px;
-
-bottom:15px;
-
-height:170px;
-
-background:white;
-
-border-radius:12px;
-
-padding:20px;
-
-z-index:2;
-
-}
-
-
-
-.letter-preview h2{
-
-color:#ff5c9a;
-
-font-size:1.2rem;
-
-}
-
-
-.flap{
-
-position:absolute;
-
-top:0;
-
-width:100%;
-
-height:130px;
-
-background:#ffb6d2;
-
-clip-path:
-polygon(
-0 0,
-100% 0,
-50% 100%
-);
-
-transform-origin:top;
-
-transition:
-transform 1s ease;
-
-z-index:4;
-
-}
-
-
-.envelope.open .flap{
-
-transform:
-rotateX(180deg);
-
-}
-
-
-
-.front{
-
-position:absolute;
-
-inset:0;
-
-background:#ff9fc4;
-
-clip-path:
-polygon(
-0 100%,
-50% 45%,
-100% 100%
-);
-
-z-index:3;
-
-}
-
-
-
-
-/* ------------------
-   ECHTER BRIEF
------------------- */
-
-
-.full-letter{
-
-position:absolute;
-
-width:min(90%,520px);
-
-max-height:80vh;
-
-overflow-y:auto;
-
-scroll-behavior:smooth;
-
-background:white;
-
-}
-
-.full-letter.show{
-
-opacity:1;
-
-transform:
-scale(1)
-translateY(0);
-
-}
-
-
-
-.full-letter h2{
-
-text-align:center;
-
-color:#ff5c9a;
-
-margin-bottom:25px;
-
-}
-
-
-
-.message{
-
-color:#555;
-
-line-height:1.9;
-
-white-space:pre-line;
-
-font-size:1rem;
-
-}
-
-
-
-.spotify{
-
-display:block;
-
-width:max-content;
-
-margin:30px auto 0;
-
-padding:15px 30px;
-
-border-radius:50px;
-
-background:#1DB954;
-
-color:white;
-
-text-decoration:none;
-
-font-weight:600;
-
-transition:.3s;
-
-}
-
-
-.spotify:hover{
-
-transform:scale(1.05);
-
-}
-
-
-
-.signature{
-
-text-align:center;
-
-margin-top:25px;
-
-color:#ff5c9a;
-
-font-weight:600;
-
-}
-
-
-
-.hint{
-
-position:absolute;
-
-bottom:80px;
-
-color:white;
-
-opacity:.8;
-
-}
-
-
-
-/* HERZEN */
-
-
-.heart{
-
-position:fixed;
-
-bottom:-40px;
-
-animation:
-float linear forwards;
-
-z-index:1;
-
-}
-
-
-
-@keyframes float{
-
-to{
-
-transform:
-translateY(-120vh)
-rotate(360deg);
-
-opacity:0;
-
-}
-
-}
-
-
-
-@media(max-width:600px){
-
-.title{
-
-font-size:2rem;
-
-top:40px;
-
-}
-
-
-.full-letter{
-
-padding:25px;
-
-max-height:75vh;
-
-}
-
-
-}
-
-
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap');
+
+  :root{
+    --paper: #F1E8D6;
+    --card: #FBF6EA;
+    --ink: #2B2620;
+    --tape: #D9C9A3;
+    --teal: #3F7D78;
+    --terracotta: #B6533B;
+    --mustard: #D9A441;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(63,125,120,0.06), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(182,83,59,0.07), transparent 40%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Work Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap{ max-width: 880px; margin:0 auto; padding: 60px 22px 70px; }
+
+  .hero{ text-align:center; margin-bottom: 20px; }
+  .hero .eyebrow{
+    font-size: 0.78rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .hero h1{
+    font-family:'Caveat', cursive;
+    font-weight: 700;
+    font-size: clamp(3rem, 9vw, 5.2rem);
+    margin: 0;
+    color: var(--terracotta);
+    line-height: 1;
+    transform: rotate(-1.5deg);
+  }
+  .hero p{
+    max-width: 520px; margin: 14px auto 0;
+    color:#544a3c; font-size: 1.02rem; line-height:1.6;
+  }
+
+  .doodle{ text-align:center; margin: 30px 0 44px; opacity:0.7; }
+  .doodle svg{ width:140px; height:auto; }
+
+  /* SCRAPBOOK GRID */
+  .board{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 34px 26px;
+  }
+
+  .polaroid{
+    background: var(--card);
+    padding: 14px 14px 20px;
+    box-shadow: 0 10px 24px rgba(43,38,32,0.14);
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .polaroid:hover{
+    transform: translateY(-6px) rotate(0deg) !important;
+    box-shadow: 0 18px 32px rgba(43,38,32,0.2);
+  }
+  .polaroid:nth-child(1){ transform: rotate(-2.5deg); }
+  .polaroid:nth-child(2){ transform: rotate(1.8deg); }
+  .polaroid:nth-child(3){ transform: rotate(-1deg); }
+  .polaroid:nth-child(4){ transform: rotate(2.4deg); }
+  .polaroid:nth-child(5){ transform: rotate(-1.8deg); }
+
+  .tape{
+    position:absolute; top:-12px; left:50%; transform: translateX(-50%) rotate(-3deg);
+    width: 70px; height: 24px;
+    background: var(--tape);
+    opacity: 0.85;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .snap{
+    aspect-ratio: 4/3;
+    border-radius: 2px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom: 14px;
+  }
+  .snap svg{ width: 56%; height: 56%; }
+
+  .polaroid h3{
+    font-family:'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .polaroid p{
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 0;
+    color: #574d3f;
+  }
+
+  /* Individual snap backgrounds */
+  .bg-shop{ background: linear-gradient(135deg, #f0d9c4, #e6bfa0); }
+  .bg-ribs{ background: linear-gradient(135deg, #e8c6a8, #c9855a); }
+  .bg-water{ background: linear-gradient(135deg, #bfe3e0, #6fb8b2); }
+  .bg-chill{ background: linear-gradient(135deg, #e9e1cd, #d3c39d); }
+  .bg-park{ background: linear-gradient(135deg, #cfe0c4, #94b884); }
+
+  /* DIARY NOTE FOOTER */
+  .diary{
+    margin-top: 60px;
+    background: var(--card);
+    border-left: 4px solid var(--mustard);
+    padding: 26px 28px;
+    box-shadow: 0 8px 20px rgba(43,38,32,0.1);
+    transform: rotate(-0.4deg);
+  }
+  .diary .label{
+    font-size: 0.72rem; letter-spacing: 0.25em; text-transform:uppercase;
+    color: var(--mustard); margin-bottom: 8px; display:block;
+  }
+  .diary p{
+    font-family:'Caveat', cursive;
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin: 0;
+    color: #4a4033;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .polaroid{ transition:none; }
+  }
 </style>
-
 </head>
-
-
 <body>
+<div class="wrap">
 
+  <div class="hero">
+    <div class="eyebrow">Kanada · Reise-Recap</div>
+    <h1>Ein paar Highlights ✨</h1>
+    <p>der letzten Woche</p>
+  </div>
 
-<div class="container">
+  <div class="doodle" aria-hidden="true">
+    <svg viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 20 Q 25 5, 45 20 T 85 20 T 125 20 T 165 20 T 195 20" stroke="#3F7D78" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="15" cy="20" r="2.5" fill="#B6533B"/>
+      <circle cx="185" cy="20" r="2.5" fill="#D9A441"/>
+    </svg>
+  </div>
 
+  <div class="board">
 
-<h1 class="title">
-Baby 🌸
-</h1>
+    <div class="polaroid">
+      <div class="tape"></div>
+      <div class="snap bg-shop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#7a4a1f" stroke-width="1.5"><path d="M6 2l1.5 5h9L18 2"/><path d="M5 8h14l-1.2 12a2 2 0 01-2 1.8H8.2A2 2 0 016.2 20z"/><circle cx="12" cy="13" r="2"/></svg>
+      </div>
+      <h3>Premium Outlets</h3>
+      <p>Ausgiebiger Shopping-Nachmittag — neue Schuhe, ein Kleid und ein Ring sind mitgekommen.</p>
+    </div>
 
+    <div class="polaroid">
+      <div class="tape"></div>
+      <div class="snap bg-ribs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#5c2f14" stroke-width="1.5"><path d="M4 6c4 0 6 2 6 6s-2 6-6 6"/><path d="M20 6c-4 0-6 2-6 6s2 6 6 6"/><path d="M10 12h4"/></svg>
+      </div>
+      <h3>Ribs essen</h3>
+      <p>Sättigend, saftig, mit Sauce bis zu den Ellbogen — genau richtig nach einem langen Tag.</p>
+    </div>
 
+    <div class="polaroid">
+      <div class="tape"></div>
+      <div class="snap bg-water">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1f5a54" stroke-width="1.5"><path d="M3 16c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/><path d="M3 20c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/><path d="M12 4c1.5 2 3 4 3 6a3 3 0 01-6 0c0-2 1.5-4 3-6z"/></svg>
+      </div>
+      <h3>Größter Wasserpark Kanadas</h3>
+      <p>Rutschen, Wellenbecken und ein Sonnenbrand als Andenken — voller Erfolg.</p>
+    </div>
 
-<div 
-class="envelope"
-id="envelope"
-onclick="openLetter()">
+    <div class="polaroid">
+      <div class="tape"></div>
+      <div class="snap bg-chill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#5e5334" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <h3>Chillertage &amp; Wäsche</h3>
+      <p>Nicht jeder Tag muss ein Ausflug sein — ein Tag Waschmaschine und einfach nichts tun tat auch gut.</p>
+       <p>Grillen @Home ist auch geil </p>
+    </div>
 
+    <div class="polaroid">
+      <div class="tape"></div>
+      <div class="snap bg-park">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2f4a24" stroke-width="1.5"><path d="M12 3l4 7h-3l3 5H8l3-5H8z"/><path d="M12 15v6"/></svg>
+      </div>
+      <h3>Nationalpark</h3>
+      <p>Raus in die Natur, durchatmen und die kanadische Wildnis in echt sehen.</p>
+    </div>
 
+  </div>
 
-<div class="back"></div>
+  <div class="diary">
+    <span class="label">Sonntag, später Abend</span>
+    <p>Noch ein bisschen länger wachgeblieben, damit das alles noch aufgeschrieben ist, bevor die Augen zufallen. 🌙</p>
+  </div>
 
-
-<div class="letter-preview">
-
-<h2>
-An klenna Brief ❤️
-</h2>
-
-</div>
-
-
-<div class="flap"></div>
-
-
-<div class="front"></div>
-
-
-</div>
-
-
-
-<div class="full-letter" id="letter">
-
-
-<h2>
-Für di ❤️
-</h2>
-
-
-<div class="message" id="text"></div>
-
-
-
-<a 
-class="spotify"
-href="https://open.spotify.com/track/0MDimlSjIqH6zMGqpfJAew"
-target="_blank">
-
-🎵 Just Us
-
-</a>
-
-
-<div class="signature">
-
-I freu mi, di wiedazumseanna 🤍
-
-</div>
-
-
-</div>
-
-
-
-<div class="hint">
-
-Tippe auf den Umschlag ✉️
-
-</div>
-
+  <div class="diary" style="border-left-color: var(--terracotta); transform: rotate(0.5deg); margin-top: 22px;">
+    <span class="label" style="color: var(--terracotta);">Ausblick</span>
+    <p>Und zuhause in Vorarlberg wartet dann noch ein Geschenk. 🎁</p>
+  </div>
 
 </div>
-
-
-
-
-<script>
-
-
-const message=`Hey there,
-
-i wollt da wieda mol a klenna Überraschung macha, und dir säga, dass du ma voll abgosch!
-
-du bisch grad ziemlich wit weg, und i merk echt wia du ma fehlsch!
-
-Ich hoff aba, dass du a wirklich geile Zit in Kanada hosch und viele schöne Momente sammla kasch und dass du jeda Augablick gnüssesch!
-
-I freu mi aba voll wenn du wieda zruck bisch..
-
-Manchmol merkt ma jo erst wia sehr ma jemand vermisst, wenn dia Person net grad neaba oanam isch..
-
-I wollt da oafach a klenns Lächla schenka, und dir säga dass di an di denk. Ganz ganz oft, bzw. dauernd..
-
-Pass gut uf di uf.
-
-Bis ganz bald. ❤️
-
-PS: Aperol gibts natürlich, wenn wieda do bisch. 🍹`;
-
-
-let i=0;
-
-
-
-function openLetter(){
-
-    const envelope = document.getElementById("envelope");
-    const letter = document.getElementById("letter");
-
-    envelope.classList.add("open");
-
-
-    setTimeout(()=>{
-
-        envelope.classList.add("hide");
-
-        letter.classList.add("show");
-
-        typeText();
-
-    },900);
-
-}
-
-
-function typeText(){
-
-const textElement = document.getElementById("text");
-const letter = document.getElementById("letter");
-
-
-if(i < message.length){
-
-    textElement.textContent += message.charAt(i);
-
-    i++;
-
-    // sanft nach unten scrollen
-    letter.scrollTo({
-        top: letter.scrollHeight,
-        behavior: "smooth"
-    });
-
-
-    setTimeout(
-        typeText,
-        35
-    );
-
-}
-
-}
-
-
-function createHeart(){
-
-
-const h=document.createElement("div");
-
-
-h.className="heart";
-
-
-h.innerHTML=
-Math.random()>0.5?
-"❤️":
-"🌸";
-
-
-h.style.left=
-Math.random()*100+"vw";
-
-
-h.style.fontSize=
-(15+Math.random()*20)+"px";
-
-
-let d=
-5+Math.random()*5;
-
-
-h.style.animationDuration=
-d+"s";
-
-
-document.body.appendChild(h);
-
-
-
-setTimeout(()=>{
-
-h.remove();
-
-},d*1000);
-
-
-}
-
-
-
-setInterval(
-createHeart,
-350
-);
-
-
-
-</script>
-
-
 </body>
-
 </html>
