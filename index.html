@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Für Rebekka 💕</title>
+<title>For Rebekka ❤️</title>
 
 <style>
     * {
@@ -14,207 +13,217 @@
     body {
         margin: 0;
         min-height: 100vh;
-        overflow: hidden;
-        font-family: "Segoe UI", sans-serif;
-        background: linear-gradient(135deg, #ffd6e7, #fff0f6, #dff5ff);
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #5b2942;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background:
+            radial-gradient(circle at top, #38415f 0%, #171a29 45%, #090a10 100%);
+        overflow: hidden;
+        color: white;
+    }
+
+    .stars {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    .star {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: rgba(255,255,255,.7);
+        border-radius: 50%;
+        animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+        0%,100% { opacity: .2; }
+        50% { opacity: 1; }
     }
 
     .container {
-        position: relative;
-        z-index: 2;
-        width: 90%;
-        max-width: 700px;
-        min-height: 500px;
-        padding: 40px 25px;
-        text-align: center;
-        background: rgba(255,255,255,0.75);
-        border-radius: 30px;
-        box-shadow: 0 15px 40px rgba(150, 70, 110, 0.2);
-        backdrop-filter: blur(8px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .screen {
-        display: none;
         width: 100%;
-        animation: fadeIn 0.8s ease;
+        max-width: 620px;
+        padding: 25px;
+        text-align: center;
+        z-index: 2;
     }
 
-    .screen.active {
-        display: block;
+    .intro {
+        margin-bottom: 35px;
+        font-size: 17px;
+        letter-spacing: 2px;
+        opacity: .85;
     }
 
-    h1 {
-        font-size: clamp(2rem, 6vw, 4rem);
-        margin-bottom: 15px;
-    }
-
-    h2 {
-        font-size: clamp(1.5rem, 4vw, 2.5rem);
-    }
-
-    p {
-        font-size: 1.25rem;
-        line-height: 1.6;
-    }
-
-    .emoji {
-        font-size: 5rem;
-        animation: bounce 2s infinite;
-    }
-
-    button {
-        border: none;
-        padding: 15px 30px;
-        margin-top: 25px;
-        border-radius: 50px;
-        font-size: 1.1rem;
-        font-weight: bold;
+    .envelope-area {
+        position: relative;
+        width: 360px;
+        max-width: 90vw;
+        height: 250px;
+        margin: auto;
         cursor: pointer;
-        background: #ff72a7;
-        color: white;
-        box-shadow: 0 8px 20px rgba(255, 75, 140, 0.3);
-        transition: transform 0.2s, background 0.2s;
+        perspective: 1000px;
     }
 
-    button:hover {
-        transform: scale(1.08);
-        background: #ff4f91;
+    .envelope {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 210px;
+        background: #e8d5c5;
+        border-radius: 8px;
+        box-shadow: 0 25px 60px rgba(0,0,0,.45);
+        transition: transform 1s ease;
+    }
+
+    .envelope:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(145deg, transparent 49%, #d5bca9 50%, transparent 51%),
+            linear-gradient(215deg, transparent 49%, #d5bca9 50%, transparent 51%);
+        border-radius: 8px;
+    }
+
+    .flap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 130px;
+        background: #f1dfd0;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        transform-origin: top;
+        transition: transform 1s ease;
+        z-index: 5;
+    }
+
+    .heart-seal {
+        position: absolute;
+        z-index: 10;
+        top: 95px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 36px;
+        transition: all .6s ease;
+    }
+
+    .letter {
+        position: absolute;
+        left: 5%;
+        width: 90%;
+        height: 310px;
+        bottom: 15px;
+        background: #fffaf5;
+        color: #29232a;
+        border-radius: 5px;
+        padding: 35px 30px;
+        text-align: left;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 1.2s ease;
+        z-index: 2;
+        box-shadow: 0 10px 30px rgba(0,0,0,.25);
+        overflow-y: auto;
+    }
+
+    .letter h1 {
+        margin-top: 0;
+        font-family: Georgia, serif;
+        font-weight: normal;
+        font-size: 28px;
+        text-align: center;
+        color: #6d3e52;
+    }
+
+    .letter p {
+        font-family: Georgia, serif;
+        font-size: 16px;
+        line-height: 1.75;
+        margin: 17px 0;
+    }
+
+    .signature {
+        text-align: right;
+        font-style: italic;
+        margin-top: 25px;
+    }
+
+    .song {
+        margin-top: 25px;
+        text-align: center;
+        font-size: 12px;
+        color: #8d6574;
+        letter-spacing: 1px;
+    }
+
+    .hint {
+        margin-top: 30px;
+        opacity: .7;
+        font-size: 14px;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%,100% { opacity: .45; }
+        50% { opacity: 1; }
+    }
+
+    .opened .flap {
+        transform: rotateX(180deg);
+        z-index: 1;
+    }
+
+    .opened .heart-seal {
+        opacity: 0;
+        transform: translateX(-50%) scale(1.5);
+    }
+
+    .opened .letter {
+        transform: translateY(-100px);
+        opacity: 1;
+        z-index: 20;
+    }
+
+    .opened .envelope {
+        transform: translateY(80px);
     }
 
     .floating-heart {
         position: fixed;
-        bottom: -50px;
-        font-size: 25px;
-        animation: floatUp linear infinite;
-        opacity: 0.7;
-        z-index: 1;
+        bottom: -30px;
+        font-size: 20px;
+        pointer-events: none;
+        animation: floatHeart 6s linear forwards;
+        z-index: 50;
     }
 
-    .canada {
-        font-size: 4rem;
-        margin: 20px;
-    }
-
-    .items {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 15px;
-        margin: 25px 0;
-    }
-
-    .item {
-        background: white;
-        padding: 15px 20px;
-        border-radius: 20px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        animation: popIn 0.6s ease forwards;
-    }
-
-    .plane {
-        font-size: 5rem;
-        animation: fly 4s linear infinite;
-        margin: 20px 0;
-    }
-
-    .heart-big {
-        font-size: 6rem;
-        animation: heartbeat 1.2s infinite;
-    }
-
-    .highlight {
-        color: #ed4d87;
-        font-weight: bold;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes bounce {
-        0%, 100% {
-            transform: translateY(0);
-        }
-
-        50% {
-            transform: translateY(-15px);
-        }
-    }
-
-    @keyframes popIn {
-        from {
-            opacity: 0;
-            transform: scale(0.5);
-        }
-
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    @keyframes floatUp {
-        from {
-            transform: translateY(0) rotate(0deg);
-            opacity: 0;
-        }
-
-        10% {
-            opacity: 0.8;
-        }
-
-        to {
-            transform: translateY(-110vh) rotate(360deg);
-            opacity: 0;
-        }
-    }
-
-    @keyframes fly {
+    @keyframes floatHeart {
         0% {
-            transform: translateX(-120px) rotate(-5deg);
+            transform: translateY(0) scale(.7);
+            opacity: 0;
         }
-
-        50% {
-            transform: translateX(120px) rotate(5deg);
+        15% {
+            opacity: .8;
         }
-
         100% {
-            transform: translateX(-120px) rotate(-5deg);
+            transform: translateY(-110vh) translateX(var(--drift)) scale(1.3);
+            opacity: 0;
         }
     }
 
-    @keyframes heartbeat {
-        0%, 100% {
-            transform: scale(1);
+    @media(max-width: 500px) {
+        .letter {
+            height: 350px;
+            padding: 25px 20px;
         }
 
-        50% {
-            transform: scale(1.2);
-        }
-    }
-
-    @media (max-width: 600px) {
-        .container {
-            min-height: 550px;
-        }
-
-        p {
-            font-size: 1.05rem;
+        .letter p {
+            font-size: 15px;
         }
     }
 </style>
@@ -222,237 +231,146 @@
 
 <body>
 
-<div id="hearts"></div>
+<div class="stars" id="stars"></div>
 
 <div class="container">
 
-    <!-- SCREEN 1 -->
-    <div class="screen active" id="screen1">
-
-        <div class="emoji">💕</div>
-
-        <h1>Rebekkaaa 💖</h1>
-
-        <p>
-            Deine letzten Tage in Kanada sind angebrochen... 🇨🇦🍁
-        </p>
-
-        <p>
-            Bevor am <span class="highlight">Donnerstag</span> wieder der Flieger wartet... ✈️
-        </p>
-
-        <button onclick="nextScreen()">
-            Was soll ich noch machen? 💭
-        </button>
-
+    <div class="intro">
+        A little something for you, Rebekka ❤️
     </div>
 
+    <div class="envelope-area" id="envelopeArea">
 
-    <!-- SCREEN 2 -->
-    <div class="screen" id="screen2">
+        <div class="letter">
 
-        <div class="canada">🇨🇦🍁✨</div>
+            <h1>For Rebekka</h1>
 
-        <h2>
-            Die letzten Tage genießen! 💕
-        </h2>
+            <p>
+                I just wanted to leave you a few words before you enjoy
+                the last days of your time in Canada.
+            </p>
 
-        <div class="items">
+            <p>
+                Honestly, I think what we have right now is really beautiful
+                exactly the way it is. I don't want to change that or put
+                any pressure on it.
+            </p>
 
-            <div class="item">☕ Schöne Momente genießen</div>
+            <p>
+                But at the same time, I can't deny that I have feelings for you.
+                And maybe, somewhere between all the things you're doing,
+                seeing and experiencing right now, I hope I'm still
+                somewhere in your thoughts too.
+            </p>
 
-            <div class="item">📸 Erinnerungen sammeln</div>
+            <p>
+                So please enjoy these last days in Canada to the fullest.
+                Take everything in. Make memories. Laugh. Explore.
+                And simply enjoy being there. ❤️
+            </p>
 
-            <div class="item">😄 Ganz viel lachen</div>
+            <p>
+                And when you're back, I really hope we'll see each other again.
+                I don't want this to end so abruptly after your vacation.
+                I'd rather continue whatever this is between us —
+                somehow, somewhere, in whatever way feels right for both of us.
+            </p>
 
-            <div class="item">🍁 Kanada aufsaugen</div>
+            <p>
+                I don't know exactly where this will lead.
+                Maybe that's part of what makes it special.
+                I just know that I don't want to simply let it disappear.
+            </p>
 
-            <div class="item">💕 Die Zeit genießen</div>
+            <p>
+                So for now...
+                enjoy Canada, enjoy your last days,
+                and know that there's someone here thinking about you. ❤️
+            </p>
+
+            <p class="signature">
+                Until we see each other again...<br>
+                Thomas
+            </p>
+
+            <div class="song">
+                ♫ Versace on the Floor · Just Us ♫
+            </div>
 
         </div>
 
-        <p>
-            Denn viel zu schnell heißt es wieder...
-        </p>
-
-        <button onclick="nextScreen()">
-            Oh oh... 😳
-        </button>
-
-    </div>
-
-
-    <!-- SCREEN 3 -->
-    <div class="screen" id="screen3">
-
-        <div class="plane">✈️</div>
-
-        <h2>
-            Und dann ist es soweit... ✈️
-        </h2>
-
-        <p>
-            <span class="highlight">Donnerstag</span> geht's wieder zurück! 🇦🇹💕
-        </p>
-
-        <p>
-            Kanada 🇨🇦 ➡️ Österreich 🇦🇹
-        </p>
-
-        <button onclick="nextScreen()">
-            Und dann? 👀
-        </button>
-
-    </div>
-
-
-    <!-- SCREEN 4 -->
-    <div class="screen" id="screen4">
-
-        <h2>
-            Der Alltag wartet schon... 😅
-        </h2>
-
-        <div class="items">
-
-            <div class="item">🌄 Abenteuer → ⏰ Wecker</div>
-
-            <div class="item">🍁 Kanada → 🏠 Zuhause</div>
-
-            <div class="item">✈️ Fliegen → 🚗 Alltag</div>
-
-            <div class="item">😎 Urlaub → 📅 Termine</div>
-
+        <div class="envelope">
+            <div class="flap"></div>
+            <div class="heart-seal">❤️</div>
         </div>
 
-        <p>
-            Aber keine Sorge... 😊
-        </p>
-
-        <button onclick="nextScreen()">
-            Warum? 💕
-        </button>
-
     </div>
 
-
-    <!-- SCREEN 5 -->
-    <div class="screen" id="screen5">
-
-        <div class="heart-big">💖</div>
-
-        <h2>
-            Weil du die Erinnerungen mitnimmst! ✨
-        </h2>
-
-        <p>
-            Also liebe Rebekka...
-        </p>
-
-        <p>
-            <span class="highlight">
-                Genieße deine letzten Tage in Kanada noch in vollen Zügen! 🇨🇦🍁
-            </span>
-        </p>
-
-        <p>
-            Mach noch ganz viele schöne Erinnerungen,
-            bevor am Donnerstag der Flieger geht ✈️💕
-        </p>
-
-        <button onclick="nextScreen()">
-            Noch eine letzte Nachricht 💌
-        </button>
-
-    </div>
-
-
-    <!-- SCREEN 6 -->
-    <div class="screen" id="screen6">
-
-        <div class="heart-big">💞</div>
-
-        <h1>
-            Für dich, Rebekka 💕
-        </h1>
-
-        <p>
-            Genieße Kanada noch einmal ganz besonders. 🇨🇦✨
-        </p>
-
-        <p>
-            Und wenn der Alltag wieder beginnt...
-        </p>
-
-        <p>
-            <span class="highlight">
-                denk einfach an all die schönen Momente zurück. 💖
-            </span>
-        </p>
-
-        <p>
-            Hab noch eine wunderschöne Zeit! 🥰🍁
-        </p>
-
+    <div class="hint">
+        Click the envelope to open it...
     </div>
 
 </div>
 
-
 <script>
 
-let currentScreen = 1;
+const stars = document.getElementById("stars");
 
-function nextScreen() {
+for(let i = 0; i < 100; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
 
-    document
-        .getElementById("screen" + currentScreen)
-        .classList.remove("active");
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDelay = Math.random() * 3 + "s";
 
-    currentScreen++;
+    stars.appendChild(star);
+}
 
-    if (currentScreen > 6) {
-        currentScreen = 1;
+const envelopeArea = document.getElementById("envelopeArea");
+
+envelopeArea.addEventListener("click", () => {
+
+    if(envelopeArea.classList.contains("opened")) return;
+
+    envelopeArea.classList.add("opened");
+
+    createHearts();
+
+    document.querySelector(".hint").textContent =
+        "For you, Rebekka ❤️";
+
+});
+
+function createHearts() {
+
+    for(let i = 0; i < 18; i++) {
+
+        setTimeout(() => {
+
+            const heart = document.createElement("div");
+
+            heart.className = "floating-heart";
+            heart.innerHTML = Math.random() > .5 ? "❤️" : "♡";
+
+            heart.style.left = Math.random() * 100 + "%";
+            heart.style.setProperty(
+                "--drift",
+                (Math.random() * 200 - 100) + "px"
+            );
+
+            heart.style.animationDuration =
+                (4 + Math.random() * 4) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+
+        }, i * 180);
     }
-
-    document
-        .getElementById("screen" + currentScreen)
-        .classList.add("active");
 }
-
-
-// Herzen erzeugen
-
-const heartSymbols = ["💕", "💖", "💗", "💓", "💞", "💘"];
-
-function createHeart() {
-
-    const heart = document.createElement("div");
-
-    heart.classList.add("floating-heart");
-
-    heart.innerHTML =
-        heartSymbols[
-            Math.floor(Math.random() * heartSymbols.length)
-        ];
-
-    heart.style.left =
-        Math.random() * 100 + "vw";
-
-    heart.style.animationDuration =
-        (5 + Math.random() * 6) + "s";
-
-    heart.style.fontSize =
-        (18 + Math.random() * 25) + "px";
-
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 12000);
-}
-
-setInterval(createHeart, 500);
 
 </script>
 
