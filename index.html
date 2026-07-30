@@ -1,5 +1,6 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,219 +11,180 @@
         box-sizing: border-box;
     }
 
-    body {
+    html, body {
         margin: 0;
-        min-height: 100vh;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+        font-family: "Courier New", monospace;
+    }
+
+    canvas {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+    }
+
+    .overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 2;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: "Segoe UI", Arial, sans-serif;
-        background:
-            radial-gradient(circle at top, #38415f 0%, #171a29 45%, #090a10 100%);
-        overflow: hidden;
-        color: white;
+        padding: 20px;
+        background: rgba(0,0,0,.15);
     }
 
-    .stars {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-    }
-
-    .star {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: rgba(255,255,255,.7);
-        border-radius: 50%;
-        animation: twinkle 3s infinite ease-in-out;
-    }
-
-    @keyframes twinkle {
-        0%,100% { opacity: .2; }
-        50% { opacity: 1; }
-    }
-
-    .container {
-        width: 100%;
-        max-width: 620px;
-        padding: 25px;
-        text-align: center;
-        z-index: 2;
-    }
-
-    .intro {
-        margin-bottom: 35px;
-        font-size: 17px;
-        letter-spacing: 2px;
-        opacity: .85;
-    }
-
-    .envelope-area {
-        position: relative;
-        width: 360px;
-        max-width: 90vw;
-        height: 250px;
-        margin: auto;
-        cursor: pointer;
-        perspective: 1000px;
-    }
-
-    .envelope {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 210px;
-        background: #e8d5c5;
-        border-radius: 8px;
-        box-shadow: 0 25px 60px rgba(0,0,0,.45);
-        transition: transform 1s ease;
-    }
-
-    .envelope:before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-            linear-gradient(145deg, transparent 49%, #d5bca9 50%, transparent 51%),
-            linear-gradient(215deg, transparent 49%, #d5bca9 50%, transparent 51%);
-        border-radius: 8px;
-    }
-
-    .flap {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 130px;
-        background: #f1dfd0;
-        clip-path: polygon(0 0, 100% 0, 50% 100%);
-        transform-origin: top;
-        transition: transform 1s ease;
-        z-index: 5;
-    }
-
-    .heart-seal {
-        position: absolute;
-        z-index: 10;
-        top: 95px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 36px;
-        transition: all .6s ease;
-    }
-
-    .letter {
-        position: absolute;
-        left: 5%;
-        width: 90%;
-        height: 310px;
-        bottom: 15px;
-        background: #fffaf5;
-        color: #29232a;
-        border-radius: 5px;
-        padding: 35px 30px;
-        text-align: left;
-        transform: translateY(100px);
+    .card {
+        width: min(650px, 95vw);
+        padding: 40px 45px;
+        background: rgba(0, 8, 0, 0.88);
+        border: 1px solid #00ff66;
+        box-shadow:
+            0 0 20px rgba(0,255,100,.35),
+            0 0 80px rgba(0,255,100,.12);
+        color: #d8ffe5;
         opacity: 0;
-        transition: all 1.2s ease;
-        z-index: 2;
-        box-shadow: 0 10px 30px rgba(0,0,0,.25);
-        overflow-y: auto;
+        transform: scale(.94);
+        transition:
+            opacity 2s ease,
+            transform 2s ease;
+        position: relative;
     }
 
-    .letter h1 {
-        margin-top: 0;
-        font-family: Georgia, serif;
-        font-weight: normal;
-        font-size: 28px;
+    .card.visible {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .top {
         text-align: center;
-        color: #6d3e52;
+        color: #00ff66;
+        font-size: 13px;
+        letter-spacing: 4px;
+        margin-bottom: 30px;
     }
 
-    .letter p {
-        font-family: Georgia, serif;
-        font-size: 16px;
-        line-height: 1.75;
-        margin: 17px 0;
-    }
-
-    .signature {
-        text-align: right;
-        font-style: italic;
-        margin-top: 25px;
-    }
-
-    .song {
-        margin-top: 25px;
+    .heart {
         text-align: center;
-        font-size: 12px;
-        color: #8d6574;
-        letter-spacing: 1px;
-    }
-
-    .hint {
-        margin-top: 30px;
-        opacity: .7;
-        font-size: 14px;
+        font-size: 34px;
+        color: #00ff66;
+        text-shadow: 0 0 15px #00ff66;
+        margin-bottom: 20px;
         animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
-        0%,100% { opacity: .45; }
-        50% { opacity: 1; }
-    }
-
-    .opened .flap {
-        transform: rotateX(180deg);
-        z-index: 1;
-    }
-
-    .opened .heart-seal {
-        opacity: 0;
-        transform: translateX(-50%) scale(1.5);
-    }
-
-    .opened .letter {
-        transform: translateY(-100px);
-        opacity: 1;
-        z-index: 20;
-    }
-
-    .opened .envelope {
-        transform: translateY(80px);
-    }
-
-    .floating-heart {
-        position: fixed;
-        bottom: -30px;
-        font-size: 20px;
-        pointer-events: none;
-        animation: floatHeart 6s linear forwards;
-        z-index: 50;
-    }
-
-    @keyframes floatHeart {
-        0% {
-            transform: translateY(0) scale(.7);
-            opacity: 0;
-        }
-        15% {
+        0%,100% {
+            transform: scale(1);
             opacity: .8;
         }
-        100% {
-            transform: translateY(-110vh) translateX(var(--drift)) scale(1.3);
+        50% {
+            transform: scale(1.15);
+            opacity: 1;
+        }
+    }
+
+    .message {
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 17px;
+        line-height: 1.75;
+    }
+
+    .message p {
+        margin: 0 0 20px;
+    }
+
+    .name {
+        color: #00ff66;
+        font-weight: bold;
+    }
+
+    .signature {
+        text-align: right;
+        margin-top: 30px;
+        color: #00ff66;
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-style: italic;
+    }
+
+    .cursor {
+        display: inline-block;
+        width: 8px;
+        height: 18px;
+        background: #00ff66;
+        margin-left: 4px;
+        animation: blink .8s infinite;
+    }
+
+    @keyframes blink {
+        50% {
             opacity: 0;
         }
     }
 
-    @media(max-width: 500px) {
-        .letter {
-            height: 350px;
-            padding: 25px 20px;
+    .start {
+        position: fixed;
+        inset: 0;
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000;
+        transition: opacity 1.5s ease;
+    }
+
+    .start.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .start-content {
+        text-align: center;
+        color: #00ff66;
+    }
+
+    .start-content h1 {
+        font-size: clamp(22px, 5vw, 40px);
+        font-weight: normal;
+        text-shadow: 0 0 15px #00ff66;
+        margin-bottom: 35px;
+    }
+
+    .start-button {
+        background: transparent;
+        border: 1px solid #00ff66;
+        color: #00ff66;
+        padding: 15px 35px;
+        font-family: "Courier New", monospace;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all .3s ease;
+    }
+
+    .start-button:hover {
+        background: #00ff66;
+        color: #000;
+        box-shadow: 0 0 30px #00ff66;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 11px;
+        color: rgba(0,255,100,.5);
+        letter-spacing: 2px;
+    }
+
+    @media(max-width: 600px) {
+        .card {
+            padding: 30px 22px;
         }
 
-        .letter p {
+        .message {
             font-size: 15px;
         }
     }
@@ -231,156 +193,225 @@
 
 <body>
 
-<div class="stars" id="stars"></div>
+<canvas id="matrix"></canvas>
 
-<div class="container">
+<div class="start" id="startScreen">
+    <div class="start-content">
+        <h1>REBEKKA<span class="cursor"></span></h1>
 
-    <div class="intro">
-        A little something for you, Rebekka ❤️
+        <button class="start-button" onclick="openMessage()">
+            [ OPEN MESSAGE ]
+        </button>
     </div>
+</div>
 
-    <div class="envelope-area" id="envelopeArea">
+<div class="overlay">
 
-        <div class="letter">
+    <div class="card" id="card">
 
-            <h1>For Rebekka</h1>
+        <div class="top">
+            CONNECTION ESTABLISHED
+        </div>
 
-            <p>
-                I just wanted to leave you a few words before you enjoy
-                the last days of your time in Canada.
-            </p>
+        <div class="heart">
+            ♥
+        </div>
 
-            <p>
-                Honestly, I think what we have right now is really beautiful
-                exactly the way it is. I don't want to change that or put
-                any pressure on it.
-            </p>
+        <div class="message">
 
             <p>
-                But at the same time, I can't deny that there are feelings for you.
-                And maybe, somewhere between all the things you're doing,
-                seeing and experiencing right now, I hope I'm still
-                somewhere in your thoughts too.
+                Hey <span class="name">Rebekka</span> ❤️
             </p>
 
             <p>
-                So please enjoy these last days in Canada to the fullest.
-                Take everything in. Make memories. Laugh. Explore.
-                And simply enjoy being there. ❤️
+                ich hoffe, du bist gut wieder zu Hause angekommen
+                und hattest einen wunderschönen Urlaub in Kanada.
+                Ich wollte dir einfach ein paar liebe Grüße dalassen
+                und dir sagen, dass ich in den letzten Tagen immer
+                wieder an dich gedacht habe. 😊
             </p>
 
             <p>
-                And when you're back, I really hope we'll see each other again.
-                I don't want this to end so abruptly after your vacation.
-                I'd rather continue whatever this is between us —
-                somehow, somewhere, in whatever way feels right for both of us.
+                Jetzt, wo du wieder zurück bist, wollte ich ganz leise
+                fragen, ob bei dir eh alles klar ist und ob sich
+                zwischen uns für dich auch noch alles gut und richtig
+                anfühlt.
             </p>
 
             <p>
-                I don't know exactly where this will lead.
-                Maybe that's part of what makes it special.
-                I just know that I don't want to simply let it disappear.
+                Ich möchte da gar keinen Druck machen – mir ist einfach
+                wichtig, dass es dir gut geht und dass wir beide mit
+                einem guten Gefühl weitermachen können. ❤️
             </p>
 
             <p>
-                Girl, you know you're perfect from
-                Your head down to your heels
-                Don't be confused by my smile
-                Cause I ain't never been more for real, for real
+                Schön, dass du wieder da bist.
+                Ich freue mich schon, dich hoffentlich bald
+                wiederzusehen. 🥰
             </p>
-            <p>
-                So for now...
-                enjoy Canada, enjoy your last days,
-                and know that there's someone here thinking about you. ❤️
-            </p>
-
-            <p class="signature">
-                99 problems, but you ain't one..
-                Hope we see each other again...<br>
-                Thomas
-               
-            </p>
-
-            <div class="song">
-                ♫ Versace on the Floor · Just Us ♫
-            </div>
 
         </div>
 
-        <div class="envelope">
-            <div class="flap"></div>
-            <div class="heart-seal">❤️</div>
+        <div class="signature">
+            Thomas ❤️
         </div>
 
-    </div>
+        <div class="footer">
+            // END OF MESSAGE //
+        </div>
 
-    <div class="hint">
-        Click the envelope to open it...
     </div>
 
 </div>
 
+
 <script>
 
-const stars = document.getElementById("stars");
+/* =========================
+   MATRIX EFFECT
+========================= */
 
-for(let i = 0; i < 100; i++) {
-    const star = document.createElement("div");
-    star.className = "star";
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
 
-    star.style.left = Math.random() * 100 + "%";
-    star.style.top = Math.random() * 100 + "%";
-    star.style.animationDelay = Math.random() * 3 + "s";
+let width;
+let height;
+let columns;
+let drops;
 
-    stars.appendChild(star);
-}
+const characters =
+    "アァカサタナハマヤャラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-const envelopeArea = document.getElementById("envelopeArea");
+function resizeCanvas() {
 
-envelopeArea.addEventListener("click", () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
 
-    if(envelopeArea.classList.contains("opened")) return;
+    columns = Math.floor(width / 16);
 
-    envelopeArea.classList.add("opened");
+    drops = [];
 
-    createHearts();
-
-    document.querySelector(".hint").textContent =
-        "For you, Rebekka ❤️";
-
-});
-
-function createHearts() {
-
-    for(let i = 0; i < 18; i++) {
-
-        setTimeout(() => {
-
-            const heart = document.createElement("div");
-
-            heart.className = "floating-heart";
-            heart.innerHTML = Math.random() > .5 ? "❤️" : "♡";
-
-            heart.style.left = Math.random() * 100 + "%";
-            heart.style.setProperty(
-                "--drift",
-                (Math.random() * 200 - 100) + "px"
-            );
-
-            heart.style.animationDuration =
-                (4 + Math.random() * 4) + "s";
-
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 8000);
-
-        }, i * 180);
+    for (let i = 0; i < columns; i++) {
+        drops[i] = Math.random() * -100;
     }
 }
+
+resizeCanvas();
+
+window.addEventListener("resize", resizeCanvas);
+
+function drawMatrix() {
+
+    ctx.fillStyle = "rgba(0,0,0,0.08)";
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = "#00ff66";
+    ctx.font = "15px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+
+        const char =
+            characters.charAt(
+                Math.floor(Math.random() * characters.length)
+            );
+
+        ctx.fillText(char, i * 16, drops[i] * 16);
+
+        if (
+            drops[i] * 16 > height &&
+            Math.random() > 0.975
+        ) {
+            drops[i] = 0;
+        }
+
+        drops[i] += 0.65;
+    }
+}
+
+setInterval(drawMatrix, 40);
+
+
+/* =========================
+   OPEN MESSAGE
+========================= */
+
+function openMessage() {
+
+    document
+        .getElementById("startScreen")
+        .classList.add("hidden");
+
+    setTimeout(() => {
+
+        document
+            .getElementById("card")
+            .classList.add("visible");
+
+    }, 1000);
+
+}
+
+
+/* =========================
+   FLOATING HEARTS
+========================= */
+
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.innerHTML = "♥";
+
+    heart.style.position = "fixed";
+    heart.style.left = Math.random() * 100 + "%";
+    heart.style.bottom = "-30px";
+    heart.style.color = "#00ff66";
+    heart.style.fontSize =
+        (10 + Math.random() * 15) + "px";
+    heart.style.textShadow =
+        "0 0 10px #00ff66";
+    heart.style.zIndex = "10";
+    heart.style.pointerEvents = "none";
+
+    document.body.appendChild(heart);
+
+    const duration =
+        5000 + Math.random() * 5000;
+
+    heart.animate(
+        [
+            {
+                transform: "translateY(0)",
+                opacity: 0
+            },
+            {
+                transform:
+                    "translateY(-100vh) translateX(" +
+                    (Math.random() * 150 - 75) +
+                    "px)",
+                opacity: .8
+            },
+            {
+                transform:
+                    "translateY(-110vh) translateX(" +
+                    (Math.random() * 150 - 75) +
+                    "px)",
+                opacity: 0
+            }
+        ],
+        {
+            duration: duration,
+            easing: "linear"
+        }
+    );
+
+    setTimeout(() => heart.remove(), duration);
+}
+
+setInterval(createHeart, 1200);
 
 </script>
 
 </body>
 </html>
+```
