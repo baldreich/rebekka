@@ -1,527 +1,83 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>REBEKKA // MESSAGE</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #000;
-      font-family: "Courier New", monospace;
-      color: #00ff66;
-    }
-
-    body {
-      position: relative;
-    }
-
-    /* MATRIX CANVAS */
-    #matrix {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      opacity: 0.75;
-    }
-
-    /* DARK OVERLAY */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background:
-        radial-gradient(
-          circle at center,
-          rgba(0, 40, 15, 0.25),
-          rgba(0, 0, 0, 0.88) 75%
-        );
-    }
-
-    /* SCANLINES */
-    .scanlines {
-      position: fixed;
-      inset: 0;
-      z-index: 5;
-      pointer-events: none;
-      opacity: 0.12;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 3px,
-        rgba(0, 255, 100, 0.18) 4px
-      );
-    }
-
-    /* MAIN */
-    .container {
-      position: relative;
-      z-index: 10;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 25px;
-    }
-
-    .terminal {
-      width: min(900px, 100%);
-      min-height: 520px;
-      padding: 28px;
-      border: 1px solid rgba(0, 255, 102, 0.45);
-      background: rgba(0, 8, 3, 0.78);
-      box-shadow:
-        0 0 20px rgba(0, 255, 102, 0.12),
-        inset 0 0 50px rgba(0, 255, 102, 0.04);
-      backdrop-filter: blur(4px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .terminal::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border: 1px solid rgba(0, 255, 102, 0.12);
-      pointer-events: none;
-    }
-
-    /* HEADER */
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid rgba(0, 255, 102, 0.18);
-      margin-bottom: 22px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-
-    .red {
-      background: #ff3b30;
-      box-shadow: 0 0 8px #ff3b30;
-    }
-
-    .yellow {
-      background: #ffcc00;
-      box-shadow: 0 0 8px #ffcc00;
-    }
-
-    .green {
-      background: #00ff66;
-      box-shadow: 0 0 8px #00ff66;
-    }
-
-    .header-title {
-      margin-left: 10px;
-      color: rgba(0, 255, 102, 0.55);
-      font-size: 12px;
-      letter-spacing: 2px;
-    }
-
-    /* BOOT SCREEN */
-    #boot {
-      color: #00ff66;
-      font-size: clamp(12px, 2vw, 16px);
-      line-height: 1.7;
-      min-height: 380px;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 8px;
-      height: 17px;
-      background: #00ff66;
-      animation: blink 0.8s infinite;
-      vertical-align: middle;
-    }
-
-    @keyframes blink {
-      50% {
-        opacity: 0;
-      }
-    }
-
-    /* MESSAGE */
-    #message {
-      display: none;
-      animation: appear 1.5s ease forwards;
-    }
-
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: scale(0.97);
-        filter: blur(5px);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1);
-        filter: blur(0);
-      }
-    }
-
-    .small-label {
-      color: rgba(0, 255, 102, 0.55);
-      font-size: 12px;
-      letter-spacing: 3px;
-      margin-bottom: 15px;
-    }
-
-    .name {
-      font-size: clamp(42px, 9vw, 90px);
-      font-weight: bold;
-      letter-spacing: 8px;
-      margin: 0 0 30px;
-      color: #00ff66;
-      text-shadow:
-        0 0 5px #00ff66,
-        0 0 20px rgba(0, 255, 102, 0.7),
-        0 0 50px rgba(0, 255, 102, 0.3);
-      animation: glitch 4s infinite;
-    }
-
-    @keyframes glitch {
-      0%,
-      94%,
-      100% {
-        transform: translate(0);
-      }
-
-      95% {
-        transform: translate(-2px, 1px);
-        text-shadow:
-          3px 0 #ff0055,
-          -3px 0 #00ffff;
-      }
-
-      96% {
-        transform: translate(2px, -1px);
-        text-shadow:
-          -3px 0 #ff0055,
-          3px 0 #00ffff;
-      }
-
-      97% {
-        transform: translate(0);
-      }
-    }
-
-    .message {
-      max-width: 720px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: clamp(18px, 3vw, 25px);
-      line-height: 1.65;
-      color: #e8fff0;
-    }
-
-    .message strong {
-      color: #00ff66;
-      text-shadow: 0 0 12px rgba(0, 255, 102, 0.8);
-    }
-
-    .highlight {
-      display: inline-block;
-      color: #00ff66;
-      font-weight: 800;
-      font-size: 1.2em;
-      letter-spacing: 2px;
-      text-shadow: 0 0 15px rgba(0, 255, 102, 0.8);
-    }
-
-    .toast {
-      margin-top: 35px;
-      padding: 14px 22px;
-      display: inline-block;
-      border: 1px solid rgba(0, 255, 102, 0.45);
-      color: #00ff66;
-      background: rgba(0, 255, 102, 0.05);
-      box-shadow: 0 0 25px rgba(0, 255, 102, 0.1);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      50% {
-        box-shadow:
-          0 0 30px rgba(0, 255, 102, 0.3),
-          inset 0 0 20px rgba(0, 255, 102, 0.05);
-      }
-    }
-
-    .footer {
-      position: absolute;
-      bottom: 18px;
-      right: 25px;
-      color: rgba(0, 255, 102, 0.35);
-      font-size: 10px;
-      letter-spacing: 2px;
-    }
-
-    /* MOBILE */
-    @media (max-width: 600px) {
-      .terminal {
-        padding: 20px;
-        min-height: 500px;
-      }
-
-      .name {
-        letter-spacing: 4px;
-      }
-
-      .message {
-        font-size: 18px;
-      }
-
-      .footer {
-        display: none;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>R.B.K. // transmission</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#000;color:#00ff66}
+body{font-family:"Courier New",monospace;overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;opacity:.42}
+.scan{position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,255,102,.035) 0,rgba(0,255,102,.035) 1px,transparent 1px,transparent 4px)}
+main{position:relative;z-index:2;min-height:100%;display:grid;place-items:center;padding:22px}
+.box{width:min(680px,100%);padding:30px;border:1px solid rgba(0,255,102,.5);background:rgba(0,0,0,.84);box-shadow:0 0 50px rgba(0,255,102,.09)}
+.meta{font-size:11px;color:#159b4d;line-height:1.8}
+h1{font-size:clamp(25px,7vw,48px);letter-spacing:.25em;margin:24px 0;text-shadow:0 0 10px #00ff66}
+#terminal{min-height:145px;line-height:1.8;font-size:14px}
+.dim{color:#58c981}
+.cursor{border-right:2px solid #00ff66;animation:blink .7s step-end infinite}
+button{display:none;margin-top:12px;background:transparent;border:1px solid #00ff66;color:#00ff66;padding:10px 16px;font:inherit;cursor:pointer}
+button:hover{background:rgba(0,255,102,.1)}
+.secret{display:none;margin-top:28px;padding-top:22px;border-top:1px dashed rgba(0,255,102,.35);line-height:1.9}
+.secret .big{font-size:18px;color:#8affb1}
+.tiny{margin-top:30px;font-size:10px;color:#116d37}
+@keyframes blink{50%{border-color:transparent}}
+.glitch{animation:glitch .12s 3}
+@keyframes glitch{0%{transform:translate(0)}25%{transform:translate(2px,-1px)}50%{transform:translate(-2px,1px)}75%{transform:translate(1px,1px)}100%{transform:translate(0)}}
+</style>
 </head>
-
 <body>
-
-  <canvas id="matrix"></canvas>
-
-  <div class="overlay"></div>
-  <div class="scanlines"></div>
-
-  <main class="container">
-    <section class="terminal">
-
-      <div class="header">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-
-        <span class="header-title">
-          TERMINAL // SECURE MESSAGE
-        </span>
-      </div>
-
-      <!-- BOOT -->
-      <div id="boot"></div>
-
-      <!-- MESSAGE -->
-      <div id="message">
-
-        <div class="small-label">
-          // INCOMING PERSONAL MESSAGE
-        </div>
-
-        <h1 class="name">
-          REBEKKA
-        </h1>
-
-        <div class="message">
-
-          <p>
-            Ich wollte dir mit meiner Nachricht
-            <strong>echt nicht vor den Kopf stossen.</strong>
-          </p>
-
-          <p>
-            Ganz im Gegenteil:
-            Ich würde mich einfach
-            <span class="highlight">MEGA FREUEN</span>,
-            wenn du morgen zum Anstossen kommst. 🥂
-          </p>
-
-          <p>
-            Also bitte einfach als Einladung
-            von Herzen verstehen. ❤️
-          </p>
-
-          <p>
-            Ich würde mich wirklich sehr freuen,
-            dich morgen zu sehen.
-          </p>
-
-        </div>
-
-        <div class="toast">
-          &gt;&gt; MISSION: GEMEINSAM ANSTOSSEN 🥂
-        </div>
-
-      </div>
-
-      <div class="footer">
-        CONNECTION: HEART_TO_HEART // STATUS: OPEN
-      </div>
-
-    </section>
-  </main>
-
-
-  <script>
-
-    /* =========================
-       MATRIX RAIN
-    ========================= */
-
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
-
-    let width;
-    let height;
-    let columns;
-    let drops;
-
-    const characters =
-      "アァカサタナハマヤャラワガザダバパ" +
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-      "0123456789" +
-      "@#$%&*";
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-
-      const fontSize = 16;
-      columns = Math.floor(width / fontSize);
-
-      drops = [];
-
-      for (let i = 0; i < columns; i++) {
-        drops[i] = Math.random() * -100;
-      }
-    }
-
-    function drawMatrix() {
-
-      ctx.fillStyle = "rgba(0, 0, 0, 0.07)";
-      ctx.fillRect(0, 0, width, height);
-
-      ctx.fillStyle = "#00ff66";
-      ctx.font = "16px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-
-        const char =
-          characters.charAt(
-            Math.floor(Math.random() * characters.length)
-          );
-
-        ctx.fillText(
-          char,
-          i * 16,
-          drops[i] * 16
-        );
-
-        if (
-          drops[i] * 16 > height &&
-          Math.random() > 0.975
-        ) {
-          drops[i] = 0;
-        }
-
-        drops[i]++;
-      }
-    }
-
-    window.addEventListener("resize", resize);
-
-    resize();
-
-    setInterval(drawMatrix, 45);
-
-
-    /* =========================
-       BOOT SEQUENCE
-    ========================= */
-
-    const boot = document.getElementById("boot");
-    const message = document.getElementById("message");
-
-    const lines = [
-      "INITIALIZING SECURE CONNECTION...",
-      "CONNECTING TO: REBEKKA",
-      "ENCRYPTION: HEART-TO-HEART",
-      "SCANNING MESSAGE...",
-      "ANALYZING INTENT...",
-      "",
-      "RESULT:",
-      "NO BAD INTENT DETECTED.",
-      "",
-      "ACTIVATING PERSONAL MESSAGE...",
-      ""
-    ];
-
-    let lineIndex = 0;
-
-    function typeLine(text, callback) {
-
-      let charIndex = 0;
-
-      const line = document.createElement("div");
-      boot.appendChild(line);
-
-      function type() {
-
-        if (charIndex < text.length) {
-
-          line.textContent += text.charAt(charIndex);
-          charIndex++;
-
-          setTimeout(type, 25);
-
-        } else {
-
-          callback();
-
-        }
-      }
-
-      type();
-    }
-
-    function nextLine() {
-
-      if (lineIndex >= lines.length) {
-
-        setTimeout(() => {
-
-          boot.style.display = "none";
-          message.style.display = "block";
-
-        }, 800);
-
-        return;
-      }
-
-      const current = lines[lineIndex];
-
-      lineIndex++;
-
-      typeLine(current, () => {
-
-        setTimeout(nextLine, current === "" ? 150 : 350);
-
-      });
-    }
-
-    setTimeout(nextLine, 1000);
-
-  </script>
-
+<canvas id="m"></canvas><div class="scan"></div>
+<main><section class="box" id="box">
+<div class="meta">[ INCOMING TRANSMISSION ]<br>[ CHANNEL: PRIVATE ]<br>[ RECIPIENT: R.B.K. ]</div>
+<h1>R.B.K.</h1>
+<div id="terminal"><span class="cursor"></span></div>
+<button id="enter">[ ENTER ]</button>
+<div class="secret" id="secret">
+<div class="meta">DECRYPTED // LEVEL 02</div>
+<p class="big">Nicht alles, worauf man sich freut,<br>muss einen Grund haben.</p>
+<p>Manchmal reicht:<br>
+du kommst wieder,<br>
+ich bestell zwei,<br>
+und der Rest ergibt sich.</p>
+<p class="dim">signal: <strong>ORANGE PROTOCOL</strong><br>
+status: <strong>VORFREUDE AKTIV</strong></p>
+</div>
+<div class="tiny">transmission will self-destruct eventually.</div>
+</section></main>
+<script>
+const c=document.getElementById("m"),x=c.getContext("2d"),chars="01アイウエオカキクケコABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let W,H,cols,d;
+function size(){W=c.width=innerWidth*devicePixelRatio;H=c.height=innerHeight*devicePixelRatio;x.font=14*devicePixelRatio+"px monospace";cols=Math.floor(W/(14*devicePixelRatio));d=Array(cols).fill(0).map(()=>Math.random()*-40)}
+function matrix(){x.fillStyle="rgba(0,0,0,.075)";x.fillRect(0,0,W,H);x.fillStyle="#00ff66";for(let i=0;i<cols;i++){x.fillText(chars[(Math.random()*chars.length)|0],i*14*devicePixelRatio,d[i]*14*devicePixelRatio);if(d[i]*14*devicePixelRatio>H&&Math.random()>.975)d[i]=0;d[i]++}}
+addEventListener("resize",size);size();setInterval(matrix,45);
+
+const lines=[
+"> searching for signal...",
+"> signal found.",
+"> location: somewhere between 'see you' and 'when are you back?'",
+"> decoding...",
+"",
+"> the orange protocol remains active.",
+"",
+"> waiting for R.B.K."
+];
+let i=0, line=0;
+function typeLine(){
+ if(line>=lines.length){document.getElementById("enter").style.display="inline-block";return}
+ const t=document.getElementById("terminal");
+ const p=document.createElement("div");p.className="dim";t.appendChild(p);
+ const s=lines[line++]; i=0;
+ const timer=setInterval(()=>{p.textContent=s.slice(0,i++);if(i>s.length){clearInterval(timer);setTimeout(typeLine,420)}},30);
+}
+setTimeout(typeLine,800);
+
+document.getElementById("enter").onclick=()=>{
+ document.getElementById("box").classList.add("glitch");
+ document.getElementById("secret").style.display="block";
+ document.getElementById("enter").textContent="[ MESSAGE DECRYPTED ]";
+ document.getElementById("enter").disabled=true;
+};
+</script>
 </body>
 </html>
