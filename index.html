@@ -2,19 +2,28 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-               maximum-scale=1.0, user-scalable=no">
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
 
 <title>REBEKKA</title>
 
 <style>
+
+/* =========================================================
+   GRUNDLAYOUT
+========================================================= */
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     width: 100%;
     height: 100%;
@@ -24,8 +33,14 @@ html, body {
 
 body {
     font-family: "Courier New", monospace;
-    cursor: pointer;
+    cursor: default;
+    user-select: none;
 }
+
+
+/* =========================================================
+   CANVAS
+========================================================= */
 
 canvas {
     position: fixed;
@@ -42,10 +57,17 @@ canvas {
     z-index: 3;
 }
 
+
+/* =========================================================
+   SCANLINES
+========================================================= */
+
 #scanlines {
     position: fixed;
     inset: 0;
+
     z-index: 10;
+
     pointer-events: none;
 
     background:
@@ -56,125 +78,306 @@ canvas {
             transparent 1px,
             transparent 4px
         );
+
+    opacity: .6;
 }
+
+
+/* =========================================================
+   HINWEIS
+========================================================= */
 
 #hint {
     position: fixed;
+
     bottom: 25px;
+    left: 0;
+
     width: 100%;
-    text-align: center;
-
-    color: rgba(0,255,65,.45);
-
-    font-family: "Courier New", monospace;
-    font-size: 11px;
-    letter-spacing: 4px;
 
     z-index: 20;
 
-    transition: opacity .7s;
+    text-align: center;
+
+    color: rgba(0,255,65,.42);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    transition:
+        opacity .7s ease,
+        transform .7s ease;
 }
 
 #hint.hide {
     opacity: 0;
+    transform: translateY(10px);
 }
 
 
-/* =========================
+/* =========================================================
+   UNSICHTBARER CLICK-BEREICH
+   ========================================================= */
+
+#nameButton {
+    position: fixed;
+
+    z-index: 30;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: min(90vw, 900px);
+    height: min(45vw, 250px);
+
+    cursor: pointer;
+
+    /*
+       Der Bereich ist unsichtbar,
+       liegt aber genau über REBEKKA.
+    */
+
+    background: transparent;
+
+    border: none;
+
+    outline: none;
+}
+
+
+/* =========================================================
    EASTER EGG
-========================= */
+========================================================= */
 
 #easterEgg {
+
     position: fixed;
+
     inset: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0,0,0,.82);
 
     z-index: 100;
 
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.86);
+
     opacity: 0;
+
     visibility: hidden;
 
-    transition: opacity .7s;
+    transition:
+        opacity .7s ease,
+        visibility .7s ease;
 }
 
 #easterEgg.show {
+
     opacity: 1;
+
     visibility: visible;
 }
 
+
+/* =========================================================
+   KARTE
+========================================================= */
+
 .card {
-    width: min(520px, 90vw);
+
+    width: min(520px, 92vw);
 
     padding: 38px 25px;
 
-    border: 1px solid #00ff41;
+    position: relative;
+
+    text-align: center;
 
     background:
         linear-gradient(
             145deg,
-            rgba(0,25,7,.97),
-            rgba(0,5,2,.98)
+            rgba(0,28,8,.97),
+            rgba(0,5,2,.99)
         );
 
+    border:
+        1px solid
+        rgba(0,255,65,.8);
+
     box-shadow:
-        0 0 20px rgba(0,255,65,.35),
-        0 0 70px rgba(0,255,65,.15),
-        inset 0 0 30px rgba(0,255,65,.05);
 
-    text-align: center;
+        0 0 15px
+        rgba(0,255,65,.3),
 
-    transform: scale(.7);
+        0 0 50px
+        rgba(0,255,65,.15),
+
+        inset 0 0 35px
+        rgba(0,255,65,.05);
+
+    transform:
+        scale(.7)
+        translateY(30px);
 
     transition:
-        transform .8s cubic-bezier(.16,1,.3,1);
+        transform .8s
+        cubic-bezier(.16,1,.3,1);
+
+    overflow: hidden;
 }
 
 #easterEgg.show .card {
-    transform: scale(1);
+
+    transform:
+        scale(1)
+        translateY(0);
 }
 
-.secret {
+
+/* =========================================================
+   SCANNER AUF KARTE
+========================================================= */
+
+.card::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: -100%;
+    top: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background: #00ff41;
+
+    box-shadow:
+        0 0 10px #00ff41,
+        0 0 25px #00ff41;
+
+    animation:
+        scanCard 2.5s linear infinite;
+}
+
+@keyframes scanCard {
+
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+
+/* =========================================================
+   SECRET HEADER
+========================================================= */
+
+.secretHeader {
+
+    color:
+        rgba(0,255,65,.5);
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   REBEKKA IM EASTER EGG
+========================================================= */
+
+.secretName {
+
     color: #00ff41;
 
-    font-size: clamp(27px, 8vw, 48px);
+    font-size:
+        clamp(
+            28px,
+            8vw,
+            50px
+        );
 
     font-weight: bold;
 
     letter-spacing: 5px;
 
     text-shadow:
+
         0 0 5px #00ff41,
+
         0 0 15px #00ff41,
-        0 0 35px #00ff41;
+
+        0 0 35px #00ff41,
+
+        0 0 60px
+        rgba(0,255,65,.6);
 }
+
+
+/* =========================================================
+   APEROL
+========================================================= */
 
 .aperol {
-    font-size: 45px;
-    margin: 20px 0;
+
+    font-size: 46px;
+
+    margin:
+        20px 0;
 
     animation:
-        float 2s ease-in-out infinite;
+        aperolFloat 2.5s
+        ease-in-out
+        infinite;
 }
 
-@keyframes float {
+@keyframes aperolFloat {
+
     0%,100% {
-        transform: translateY(0) rotate(-4deg);
+        transform:
+            translateY(0)
+            rotate(-4deg);
     }
 
     50% {
-        transform: translateY(-8px) rotate(4deg);
+        transform:
+            translateY(-9px)
+            rotate(4deg);
     }
 }
 
-.message {
-    color: #d7ffe1;
 
-    font-family: Arial, sans-serif;
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message {
+
+    color: #d8ffe2;
+
+    font-family:
+        Arial,
+        sans-serif;
 
     font-size: 18px;
 
@@ -182,76 +385,175 @@ canvas {
 }
 
 .message strong {
+
     color: #00ff41;
+
+    text-shadow:
+        0 0 8px
+        rgba(0,255,65,.7);
 }
 
-.close {
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+#close {
+
     display: inline-block;
 
     margin-top: 25px;
 
-    padding: 10px 20px;
+    padding:
+        10px 22px;
 
-    border: 1px solid rgba(0,255,65,.6);
+    border:
+        1px solid
+        rgba(0,255,65,.55);
 
-    color: rgba(0,255,65,.7);
+    color:
+        rgba(0,255,65,.7);
 
-    font-size: 11px;
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
 
     letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition:
+        background .25s ease,
+        color .25s ease;
 }
 
-.close:hover {
+#close:hover {
+
     background: #00ff41;
+
     color: #000;
 }
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    #nameButton {
+
+        width: 96vw;
+
+        height: 35vw;
+    }
+
+    .card {
+
+        padding:
+            32px 18px;
+    }
+
+    .message {
+
+        font-size: 16px;
+    }
+}
+
 </style>
 </head>
 
 
 <body>
 
+
+<!-- =======================================================
+     MATRIX HINTERGRUND
+======================================================= -->
+
 <canvas id="matrix"></canvas>
+
+
+<!-- =======================================================
+     REBEKKA PARTICLES
+======================================================= -->
+
 <canvas id="particles"></canvas>
+
+
+<!-- =======================================================
+     SCANLINES
+======================================================= -->
 
 <div id="scanlines"></div>
 
+
+<!-- =======================================================
+     HINWEIS
+======================================================= -->
+
 <div id="hint">
-    DOUBLE TAP
+    TAP REBEKKA
 </div>
 
+
+<!-- =======================================================
+     UNSICHTBARER BUTTON ÜBER REBEKKA
+======================================================= -->
+
+<button id="nameButton"
+        aria-label="REBEKKA">
+</button>
+
+
+<!-- =======================================================
+     EASTER EGG
+======================================================= -->
 
 <div id="easterEgg">
 
     <div class="card">
 
-        <div style="
-            color:rgba(0,255,65,.5);
-            font-size:11px;
-            letter-spacing:4px;
-            margin-bottom:18px;
-        ">
+        <div class="secretHeader">
             // SECRET MESSAGE FOUND //
         </div>
 
-        <div class="secret">
+
+        <div class="secretName">
             REBEKKA
         </div>
+
 
         <div class="aperol">
             🍹
         </div>
 
+
         <div class="message">
-            Manches muss ma <br>
-            net lang plana.<br><br>
 
-            <strong>Aperol?</strong> 😉<br><br>
+            Manche Dinge muss man
+            <br>
 
-            Ich lad di i. Du woasch wo 😉
+            nicht lange planen.
+
+            <br><br>
+
+            <strong>
+                Aperol?
+            </strong>
+
+            😉
+
+            <br><br>
+
+            Ich lade dich ein.
+
         </div>
 
-        <div class="close" id="close">
+
+        <div id="close">
             CLOSE
         </div>
 
@@ -262,15 +564,31 @@ canvas {
 
 <script>
 
+
 /* =========================================================
-   MATRIX REGEN
+   MATRIX ZEICHEN
+========================================================= */
+
+const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+    "0123456789" +
+    "@#$%&*+=<>/" +
+    "アカサタナハマヤラワ";
+
+
+/* =========================================================
+   MATRIX BACKGROUND
 ========================================================= */
 
 const matrixCanvas =
-    document.getElementById("matrix");
+    document.getElementById(
+        "matrix"
+    );
 
 const mctx =
-    matrixCanvas.getContext("2d");
+    matrixCanvas.getContext(
+        "2d"
+    );
 
 let W;
 let H;
@@ -279,35 +597,67 @@ let fontSize;
 let columns;
 let drops;
 
-const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-    "0123456789" +
-    "@#$%&*+=<>アカサタナハマヤラワ";
 
-function resize() {
+function resizeMatrix() {
 
-    W = window.innerWidth;
-    H = window.innerHeight;
+    W =
+        window.innerWidth;
+
+    H =
+        window.innerHeight;
+
 
     const dpr =
-        Math.min(window.devicePixelRatio || 1, 2);
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
 
-    matrixCanvas.width = W * dpr;
-    matrixCanvas.height = H * dpr;
 
-    matrixCanvas.style.width = W + "px";
-    matrixCanvas.style.height = H + "px";
+    matrixCanvas.width =
+        W * dpr;
 
-    mctx.setTransform(dpr,0,0,dpr,0,0);
+    matrixCanvas.height =
+        H * dpr;
 
-    fontSize = W < 600 ? 14 : 17;
+
+    matrixCanvas.style.width =
+        W + "px";
+
+    matrixCanvas.style.height =
+        H + "px";
+
+
+    mctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+
+    fontSize =
+        W < 600
+            ? 14
+            : 17;
+
 
     columns =
-        Math.ceil(W / fontSize);
+        Math.ceil(
+            W / fontSize
+        );
+
 
     drops = [];
 
-    for(let i=0; i<columns; i++) {
+
+    for (
+        let i = 0;
+        i < columns;
+        i++
+    ) {
 
         drops[i] =
             Math.random() *
@@ -315,15 +665,23 @@ function resize() {
     }
 }
 
-resize();
+
+resizeMatrix();
+
 
 window.addEventListener(
     "resize",
-    resize
+    resizeMatrix
 );
 
 
-function matrixRain() {
+function drawMatrix() {
+
+    /*
+       schwarzer Schleier,
+       dadurch entstehen die
+       langen Matrix-Spuren.
+    */
 
     mctx.fillStyle =
         "rgba(0,0,0,.075)";
@@ -335,33 +693,59 @@ function matrixRain() {
         H
     );
 
+
     mctx.font =
         fontSize +
         "px Courier New";
 
-    for(let i=0; i<columns; i++) {
+
+    for (
+        let i = 0;
+        i < columns;
+        i++
+    ) {
 
         const char =
-            chars[
+            characters[
                 Math.floor(
                     Math.random() *
-                    chars.length
+                    characters.length
                 )
             ];
+
 
         const x =
             i * fontSize;
 
         const y =
-            drops[i] * fontSize;
+            drops[i] *
+            fontSize;
 
-        mctx.fillStyle =
-            Math.random() > .93
-                ? "#c8ffd4"
-                : "#00ff41";
+
+        /*
+           gelegentlich ein fast
+           weiß-grüner Kopf
+        */
+
+        if (
+            Math.random() > .94
+        ) {
+
+            mctx.fillStyle =
+                "#c8ffd4";
+
+        } else {
+
+            mctx.fillStyle =
+                "#00ff41";
+        }
+
 
         mctx.shadowBlur = 8;
-        mctx.shadowColor = "#00ff41";
+
+        mctx.shadowColor =
+            "#00ff41";
+
 
         mctx.fillText(
             char,
@@ -369,38 +753,49 @@ function matrixRain() {
             y
         );
 
+
         mctx.shadowBlur = 0;
+
 
         drops[i] +=
             .45 +
-            Math.random() * .7;
+            Math.random() * .65;
 
-        if(
+
+        if (
             y > H &&
-            Math.random() > .97
+            Math.random() > .975
         ) {
+
             drops[i] =
                 Math.random() * -20;
         }
     }
 
+
     requestAnimationFrame(
-        matrixRain
+        drawMatrix
     );
 }
 
-matrixRain();
+
+drawMatrix();
 
 
 /* =========================================================
-   REBEKKA AUS HUNDERTEN ZEICHEN
+   REBEKKA PARTICLES
 ========================================================= */
 
 const particleCanvas =
-    document.getElementById("particles");
+    document.getElementById(
+        "particles"
+    );
 
 const ctx =
-    particleCanvas.getContext("2d");
+    particleCanvas.getContext(
+        "2d"
+    );
+
 
 let particles = [];
 
@@ -409,14 +804,276 @@ let targetPoints = [];
 let animationStart =
     performance.now();
 
+
 let phase =
     "forming";
 
 
+/* =========================================================
+   ERSTELLE DIE PIXEL-MASKE
+========================================================= */
+
+function createTargetPoints() {
+
+    const offscreen =
+        document.createElement(
+            "canvas"
+        );
+
+
+    const octx =
+        offscreen.getContext(
+            "2d"
+        );
+
+
+    offscreen.width = W;
+
+    offscreen.height = H;
+
+
+    /*
+       Schriftgröße automatisch
+       an Bildschirm anpassen.
+    */
+
+    let fontSize =
+        Math.min(
+            W * .22,
+            H * .30,
+            230
+        );
+
+
+    /*
+       Auf Smartphones etwas
+       kompakter.
+    */
+
+    if (
+        W < 600
+    ) {
+
+        fontSize =
+            Math.min(
+                W * .20,
+                125
+            );
+    }
+
+
+    octx.font =
+        "900 " +
+        fontSize +
+        "px Arial";
+
+
+    octx.textAlign =
+        "center";
+
+
+    octx.textBaseline =
+        "middle";
+
+
+    octx.fillStyle =
+        "#ffffff";
+
+
+    /*
+       HIER WIRD REBEKKA
+       ALS MASKE GEZEICHNET
+    */
+
+    octx.fillText(
+        "REBEKKA",
+        W / 2,
+        H / 2
+    );
+
+
+    /*
+       Pixel auslesen
+    */
+
+    const image =
+        octx.getImageData(
+            0,
+            0,
+            W,
+            H
+        );
+
+
+    targetPoints = [];
+
+
+    /*
+       Abstand zwischen den
+       einzelnen Matrix-Zeichen.
+
+       kleiner = mehr Zeichen
+    */
+
+    const step =
+        W < 600
+            ? 4
+            : 5;
+
+
+    for (
+        let y = 0;
+        y < H;
+        y += step
+    ) {
+
+        for (
+            let x = 0;
+            x < W;
+            x += step
+        ) {
+
+            const index =
+                (
+                    y * W +
+                    x
+                ) * 4;
+
+
+            /*
+               Wenn dieser Pixel
+               innerhalb des Buchstabens
+               liegt, kommt hier ein
+               Matrix-Zeichen hin.
+            */
+
+            if (
+                image.data[
+                    index + 3
+                ] > 100
+            ) {
+
+                targetPoints.push({
+                    x: x,
+                    y: y
+                });
+            }
+        }
+    }
+
+
+    createParticles();
+}
+
+
+/* =========================================================
+   PARTICLES ERZEUGEN
+========================================================= */
+
+function createParticles() {
+
+    particles = [];
+
+
+    for (
+        let i = 0;
+        i < targetPoints.length;
+        i++
+    ) {
+
+        const target =
+            targetPoints[i];
+
+
+        particles.push({
+
+            /*
+               Startposition:
+               irgendwo auf dem Bildschirm
+            */
+
+            x:
+                Math.random() * W,
+
+            y:
+                Math.random() * H,
+
+
+            /*
+               Zielposition:
+               exakter Punkt in REBEKKA
+            */
+
+            targetX:
+                target.x,
+
+            targetY:
+                target.y,
+
+
+            /*
+               Anfangsbewegung
+            */
+
+            vx:
+                (Math.random() - .5) * 8,
+
+            vy:
+                (Math.random() - .5) * 8,
+
+
+            /*
+               zufälliges Matrix-Zeichen
+            */
+
+            char:
+                characters[
+                    Math.floor(
+                        Math.random() *
+                        characters.length
+                    )
+                ],
+
+
+            size:
+                W < 600
+                    ? 10
+                    : 13,
+
+
+            alpha:
+                .2 +
+                Math.random() * .8,
+
+
+            /*
+               Jedes Zeichen
+               startet leicht versetzt.
+            */
+
+            delay:
+                Math.random() * 1500,
+
+
+            arrived:
+                false
+        });
+    }
+}
+
+
+/* =========================================================
+   CANVAS RESIZE
+========================================================= */
+
 function resizeParticles() {
 
     const dpr =
-        Math.min(window.devicePixelRatio || 1, 2);
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
 
     particleCanvas.width =
         W * dpr;
@@ -424,11 +1081,13 @@ function resizeParticles() {
     particleCanvas.height =
         H * dpr;
 
+
     particleCanvas.style.width =
         W + "px";
 
     particleCanvas.style.height =
         H + "px";
+
 
     ctx.setTransform(
         dpr,
@@ -439,8 +1098,13 @@ function resizeParticles() {
         0
     );
 
+
     createTargetPoints();
 }
+
+
+resizeParticles();
+
 
 window.addEventListener(
     "resize",
@@ -448,167 +1112,8 @@ window.addEventListener(
 );
 
 
-/*
-   Hier wird REBEKKA als echte Pixel-Maske
-   erzeugt.
-*/
-
-function createTargetPoints() {
-
-    const off =
-        document.createElement("canvas");
-
-    const octx =
-        off.getContext("2d");
-
-    off.width = W;
-    off.height = H;
-
-    const fontSize =
-        Math.min(
-            W * .22,
-            H * .30,
-            230
-        );
-
-    octx.font =
-        "900 " +
-        fontSize +
-        "px Arial";
-
-    octx.textAlign =
-        "center";
-
-    octx.textBaseline =
-        "middle";
-
-    octx.fillStyle =
-        "white";
-
-    octx.fillText(
-        "REBEKKA",
-        W / 2,
-        H / 2
-    );
-
-    const image =
-        octx.getImageData(
-            0,
-            0,
-            W,
-            H
-        );
-
-    targetPoints = [];
-
-    /*
-       Je größer STEP, desto weniger Zeichen.
-       3 = sehr viele Zeichen.
-    */
-
-    const step =
-        W < 600 ? 5 : 6;
-
-    for(
-        let y=0;
-        y<H;
-        y+=step
-    ) {
-
-        for(
-            let x=0;
-            x<W;
-            x+=step
-        ) {
-
-            const index =
-                (y * W + x) * 4;
-
-            if(
-                image.data[index + 3] > 100
-            ) {
-
-                targetPoints.push({
-                    x,
-                    y
-                });
-            }
-        }
-    }
-
-    createParticles();
-}
-
-
 /* =========================================================
-   PARTICLES
-========================================================= */
-
-function createParticles() {
-
-    particles = [];
-
-    /*
-       Jede Position des Schriftzuges
-       bekommt ein eigenes Matrix-Zeichen.
-    */
-
-    for(
-        let i=0;
-        i<targetPoints.length;
-        i++
-    ) {
-
-        const target =
-            targetPoints[i];
-
-        particles.push({
-
-            x:
-                Math.random() * W,
-
-            y:
-                Math.random() * H,
-
-            targetX:
-                target.x,
-
-            targetY:
-                target.y,
-
-            vx:
-                (Math.random()-.5)*8,
-
-            vy:
-                (Math.random()-.5)*8,
-
-            char:
-                chars[
-                    Math.floor(
-                        Math.random() *
-                        chars.length
-                    )
-                ],
-
-            size:
-                W < 600 ? 11 : 14,
-
-            delay:
-                Math.random() * 1600,
-
-            alpha:
-                .2 +
-                Math.random() * .8,
-
-            arrived:
-                false
-        });
-    }
-}
-
-
-/* =========================================================
-   ANIMATION
+   PARTICLE ANIMATION
 ========================================================= */
 
 function animate(now) {
@@ -620,125 +1125,136 @@ function animate(now) {
         H
     );
 
-    const elapsed =
-        now - animationStart;
 
-    for(
+    const elapsed =
+        now -
+        animationStart;
+
+
+    let arrivedCount = 0;
+
+
+    for (
         const p of particles
     ) {
 
+
         /*
-           Erst Chaos.
-           Danach zieht jedes Zeichen
-           zu seiner exakten Zielposition.
+           NACH DER STARTPHASE:
+           Zeichen fliegen zu
+           ihrem REBEKKA-Pixel.
         */
 
-        if(
+        if (
             elapsed >
-            1000 + p.delay
+            900 + p.delay
         ) {
 
             const dx =
-                p.targetX - p.x;
+                p.targetX -
+                p.x;
 
             const dy =
-                p.targetY - p.y;
+                p.targetY -
+                p.y;
+
 
             /*
-               Federartige Bewegung
+               Feder-Effekt
             */
 
             p.vx +=
-                dx * .0025;
+                dx * .0027;
 
             p.vy +=
-                dy * .0025;
+                dy * .0027;
+
 
             p.vx *= .84;
+
             p.vy *= .84;
 
-            p.x += p.vx;
-            p.y += p.vy;
 
-            if(
-                Math.abs(dx) < 1 &&
-                Math.abs(dy) < 1
+            p.x +=
+                p.vx;
+
+            p.y +=
+                p.vy;
+
+
+            if (
+                Math.abs(dx) < 1.2 &&
+                Math.abs(dy) < 1.2
             ) {
-                p.arrived = true;
-            }
 
-        } else {
-
-            /*
-               Anfangsphase:
-               zufällige Matrix-Partikel
-            */
-
-            p.x += p.vx;
-            p.y += p.vy;
-
-            p.vx *= .99;
-            p.vy *= .99;
-
-            if(
-                p.x < 0 ||
-                p.x > W
-            ) {
-                p.vx *= -1;
-            }
-
-            if(
-                p.y < 0 ||
-                p.y > H
-            ) {
-                p.vy *= -1;
+                p.arrived =
+                    true;
             }
         }
 
 
         /*
-           Zeichen leicht wechseln,
-           damit es nach echtem Matrix-Code aussieht.
+           Zähle fertige Zeichen
         */
 
-        if(
+        if (
+            p.arrived
+        ) {
+
+            arrivedCount++;
+        }
+
+
+        /*
+           Matrix-Zeichen gelegentlich
+           wechseln
+        */
+
+        if (
             Math.random() < .035
         ) {
 
             p.char =
-                chars[
+                characters[
                     Math.floor(
                         Math.random() *
-                        chars.length
+                        characters.length
                     )
                 ];
         }
 
 
         /*
-           Wenn das Zeichen angekommen ist,
-           wird es heller.
+           Angekommene Zeichen
+           leuchten stärker.
         */
 
         ctx.globalAlpha =
             p.arrived
-                ? .9
+                ? .95
                 : p.alpha;
+
 
         ctx.font =
             p.size +
             "px Courier New";
+
 
         ctx.fillStyle =
             p.arrived
                 ? "#00ff41"
                 : "#00b82f";
 
+
         ctx.shadowBlur =
-            p.arrived ? 10 : 4;
+            p.arrived
+                ? 9
+                : 3;
+
 
         ctx.shadowColor =
             "#00ff41";
+
 
         ctx.fillText(
             p.char,
@@ -747,33 +1263,38 @@ function animate(now) {
         );
     }
 
-    ctx.shadowBlur = 0;
+
     ctx.globalAlpha = 1;
+
+    ctx.shadowBlur = 0;
 
 
     /*
-       Wenn die meisten Partikel angekommen sind,
-       wird die Schrift für einen Moment stabil.
+       Wenn fast alle Zeichen
+       angekommen sind:
+       REBEKKA steht fertig da.
     */
 
-    const arrived =
-        particles.filter(
-            p => p.arrived
-        ).length;
-
-    if(
-        arrived >
-        particles.length * .96 &&
+    if (
+        arrivedCount >
+        particles.length * .97 &&
         phase === "forming"
     ) {
 
-        phase = "formed";
+        phase =
+            "formed";
+
+
+        /*
+           5 Sekunden stehen lassen
+        */
 
         setTimeout(
-            startDissolve,
+            dissolve,
             5000
         );
     }
+
 
     requestAnimationFrame(
         animate
@@ -782,61 +1303,66 @@ function animate(now) {
 
 
 /* =========================================================
-   REBEKKA ZERFÄLLT
+   ZERFALL
 ========================================================= */
 
-function startDissolve() {
+function dissolve() {
 
     phase =
         "dissolving";
 
-    for(
+
+    for (
         const p of particles
     ) {
 
         /*
-           Die Zeichen fliegen wieder auseinander.
+           Jedes Zeichen bekommt
+           eine zufällige Flugrichtung.
         */
 
         p.vx =
-            (Math.random()-.5) *
+            (Math.random() - .5) *
             12;
 
         p.vy =
-            (Math.random()-.5) *
+            (Math.random() - .5) *
             12;
+
 
         p.arrived =
             false;
     }
 
+
+    /*
+       Danach wieder neu aufbauen
+    */
+
     setTimeout(
-        startFormAgain,
+        restart,
         2200
     );
 }
 
 
 /* =========================================================
-   ERNEUTER AUFBAU
+   NEUER AUFBAU
 ========================================================= */
 
-function startFormAgain() {
+function restart() {
 
     animationStart =
         performance.now();
 
+
     phase =
         "forming";
 
-    for(
+
+    for (
         const p of particles
     ) {
-
-        /*
-           Alle Zeichen starten wieder irgendwo
-           im Matrix-Regen.
-        */
 
         p.x =
             Math.random() * W;
@@ -844,14 +1370,19 @@ function startFormAgain() {
         p.y =
             Math.random() * H;
 
+
         p.vx =
-            (Math.random()-.5)*8;
+            (Math.random() - .5) *
+            8;
 
         p.vy =
-            (Math.random()-.5)*8;
+            (Math.random() - .5) *
+            8;
+
 
         p.delay =
-            Math.random()*1600;
+            Math.random() * 1500;
+
 
         p.arrived =
             false;
@@ -859,9 +1390,9 @@ function startFormAgain() {
 }
 
 
-/* Start */
-
-resizeParticles();
+/* =========================================================
+   START ANIMATION
+========================================================= */
 
 requestAnimationFrame(
     animate
@@ -869,23 +1400,28 @@ requestAnimationFrame(
 
 
 /* =========================================================
-   DOUBLE TAP / DOUBLE CLICK
+   EASTER EGG ÖFFNEN
 ========================================================= */
+
+const nameButton =
+    document.getElementById(
+        "nameButton"
+    );
+
 
 const easterEgg =
     document.getElementById(
         "easterEgg"
     );
 
+
 const hint =
     document.getElementById(
         "hint"
     );
 
-let lastTap = 0;
 
-
-function openEgg() {
+function openEasterEgg() {
 
     easterEgg.classList.add(
         "show"
@@ -897,48 +1433,43 @@ function openEgg() {
 }
 
 
-/* Desktop */
+/*
+   PC:
+   Klick auf REBEKKA
+*/
 
-document.addEventListener(
-    "dblclick",
-    function(e) {
+nameButton.addEventListener(
+    "click",
+    function() {
 
-        if(
-            !e.target.closest(".card")
-        ) {
-            openEgg();
-        }
+        openEasterEgg();
+
     }
 );
 
 
-/* Smartphone */
+/*
+   Smartphone:
+   Tipp auf REBEKKA
+*/
 
-document.addEventListener(
+nameButton.addEventListener(
     "touchend",
     function(e) {
 
-        const now =
-            Date.now();
+        e.preventDefault();
 
-        if(
-            now - lastTap < 350
-        ) {
-
-            e.preventDefault();
-
-            openEgg();
-        }
-
-        lastTap = now;
+        openEasterEgg();
 
     },
-    { passive:false }
+    {
+        passive: false
+    }
 );
 
 
 /* =========================================================
-   CLOSE
+   EASTER EGG SCHLIESSEN
 ========================================================= */
 
 document.getElementById(
@@ -953,25 +1484,33 @@ document.getElementById(
             "show"
         );
 
+
         setTimeout(
-            () =>
+            function() {
+
                 hint.classList.remove(
                     "hide"
-                ),
+                );
+
+            },
             700
         );
     }
 );
 
 
-/* Klick außerhalb */
+/*
+   Klick außerhalb der Karte
+   schließt ebenfalls.
+*/
 
 easterEgg.addEventListener(
     "click",
     function(e) {
 
-        if(
-            e.target === easterEgg
+        if (
+            e.target ===
+            easterEgg
         ) {
 
             easterEgg.classList.remove(
@@ -979,10 +1518,13 @@ easterEgg.addEventListener(
             );
 
             setTimeout(
-                () =>
+                function() {
+
                     hint.classList.remove(
                         "hide"
-                    ),
+                    );
+
+                },
                 700
             );
         }
