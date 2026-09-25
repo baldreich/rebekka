@@ -602,20 +602,20 @@ h1 {
 
     position: absolute;
 
-    inset: -50px;
+    inset: 0;
 
-    background-position: center;
+    background-position: top;
     background-size: cover;
     background-repeat: no-repeat;
 
     opacity: 0;
 
+    /* Bild deutlich sichtbarer */
     filter:
-        blur(2px)
-        brightness(0.35)
-        saturate(0.8);
+        brightness(0.85)
+        saturate(1.15);
 
-    transform: scale(1.05);
+    transform: scale(1.02);
 
     transition:
         opacity 1s ease,
