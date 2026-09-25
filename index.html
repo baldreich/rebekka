@@ -869,23 +869,23 @@ const questions = {
     frage1: {
 
         question:
-            "Wenn du spontan einen freien Abend hättest – was würdest du lieber machen?",
+            "Findsch abgseanna vo da letzta Zit dass ma es net oh schö und fein ket hond?",
 
         answers: [
 
             {
-                text: "🍝 Essen gehen",
+                text: "Jo",
                 next: "frage2"
             },
 
             {
-                text: "🍹 Etwas trinken gehen",
+                text: "Na",
                 next: "frage3"
             },
 
             {
-                text: "🎬 Einen Film schauen",
-                next: "frage4"
+                text: "bin ma net sicha",
+                next: "frage2"
             }
 
         ]
@@ -896,18 +896,18 @@ const questions = {
     frage2: {
 
         question:
-            "Was wäre dir dabei lieber?",
+            "Eaba - i kann mi an viel schönes erinnera..",
 
         answers: [
 
             {
-                text: "Etwas Neues ausprobieren",
-                next: "frage5"
+                text: "und etzt des ganze oafach beenden",
+                next: "frage3"
             },
 
             {
-                text: "Lieber etwas Bekanntes",
-                next: "frage6"
+                text: "doch nomol probiera",
+                next: "frage4"
             }
 
         ]
@@ -918,25 +918,19 @@ const questions = {
     frage3: {
 
         question:
-            "Und was wäre dein Getränk der Wahl?",
+            "willsch denn wittahin irgendoan kontakt oda gar koan?",
 
         answers: [
 
             {
-                text: "🍸 Cocktail",
+                text: "jo..",
                 next: "frage5"
             },
 
             {
-                text: "🍺 Bier",
+                text: "na, komplett koan me",
                 next: "frage6"
-            },
-
-            {
-                text: "☕ Kaffee",
-                next: "frage5"
             }
-
         ]
 
     },
@@ -945,23 +939,18 @@ const questions = {
     frage4: {
 
         question:
-            "Welcher Film wäre spontan am interessantesten?",
+            "freut mi - i lern dazua und woass wia's oafach und möglich isch",
 
         answers: [
 
             {
-                text: "😂 Etwas Lustiges",
-                next: "frage5"
+                text: "bezweifel i",
+                next: "frage"
             },
 
             {
-                text: "❤️ Etwas Romantisches",
+                text: "i globs",
                 next: "frage6"
-            },
-
-            {
-                text: "😱 Etwas Spannendes",
-                next: "frage5"
             }
 
         ]
@@ -972,17 +961,17 @@ const questions = {
     frage5: {
 
         question:
-            "Eine letzte Frage...",
+            "wie söll der usschoua..?",
 
         answers: [
 
             {
-                text: "Ich bin neugierig 😏",
-                next: "ende1"
+                text: "Reels, Chickpause,.. so iwie 😏",
+                next: "ende3"
             },
 
             {
-                text: "Jetzt wird es spannend...",
+                text: "alls löscha und überall blockiera",
                 next: "ende2"
             }
 
@@ -994,18 +983,18 @@ const questions = {
     frage6: {
 
         question:
-            "Und wenn du wählen müsstest?",
+            "iwenn wieda mol treaffa, vlt mit nam Aperol?",
 
         answers: [
 
             {
-                text: "Warum nicht?",
+                text: "Jo?",
                 next: "ende1"
             },
 
             {
-                text: "Vielleicht...",
-                next: "ende2"
+                text: "Los",
+                next: "ende3"
             }
 
         ]
@@ -1026,10 +1015,10 @@ const endings = {
     ende1: {
 
         title:
-            "Interessant...",
+            "❤️❤️❤️",
 
         text:
-            "Vielleicht war das ja genau die Antwort, auf die ich gehofft habe. 😉"
+            "des war dia Antwort, uf dia i ghofft hon. 😉"
 
     },
 
@@ -1040,7 +1029,17 @@ const endings = {
             "Das war's",
 
         text:
-            "Danke, dass du dich darauf eingelassen hast. 😊"
+            "Danke, dass du di druf iglossa hosch und für die Memories. 😊"
+
+    },
+
+   ende3: {
+
+        title:
+            "säg Bescheid wegs na Chickpause",
+
+        text:
+            "Danke. Los 😊"
 
     }
 
