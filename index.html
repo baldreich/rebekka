@@ -1348,63 +1348,39 @@ function showPage(id) {
 
 function transition(callback) {
 
-
     const transitionElement =
-        document.getElementById(
-            "transition"
-        );
-
+        document.getElementById("transition");
 
     const text =
-        document.getElementById(
-            "transitionText"
-        );
+        document.getElementById("transitionText");
 
+    // Zufälligen Matrix-Code erzeugen
+    text.textContent = randomMatrixText();
 
-    /*
-       Zufällige Matrix-Zeichen
-    */
+    // Animation zurücksetzen
+    transitionElement.classList.remove("show");
 
-    text.textContent =
-        randomMatrixText();
-
-
-    /*
-       Animation zurücksetzen
-    */
-
-    transitionElement.classList.remove(
-        "show"
-    );
-
-
+    // Browser zwingt zur Neuberechnung
     void transitionElement.offsetWidth;
 
+    // Übergang starten
+    transitionElement.classList.add("show");
 
-    /*
-       Animation starten
-    */
+    // Nach kurzer Zeit die neue Seite laden
+    setTimeout(function() {
 
-    transitionElement.classList.add(
-        "show"
-    );
+        callback();
 
+    }, 350);
 
-    /*
-       Neue Seite anzeigen
-    */
+    // WICHTIG:
+    // Nach Ende der Animation den schwarzen Layer entfernen
+    setTimeout(function() {
 
-    setTimeout(
-        function() {
+        transitionElement.classList.remove("show");
 
-            callback();
-
-        },
-        350
-    );
-
+    }, 750);
 }
-
 
 
 /* =========================================================
