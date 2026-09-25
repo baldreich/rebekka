@@ -627,8 +627,8 @@ h1 {
     ================================================== -->
 
     <section
-        id="start"
-        class="page active"
+        id="introPage"
+        class="page"
     >
 
         <div class="subtitle">
@@ -735,8 +735,8 @@ h1 {
     ================================================== -->
 
     <section
-        id="introPage"
-        class="page"
+        id="start"
+        class="page active"
     >
 
         <div class="subtitle">
@@ -760,9 +760,9 @@ h1 {
         </div>
 
 
-      <button
+    <button
     class="answer-btn"
-    onclick="openIntro()"
+    onclick="startGame('frage1')"
 >
     Los
 </button>
@@ -1123,19 +1123,13 @@ function showWaiting() {
 
 function openIntro() {
 
-  function openIntro() {
-
-    // Umschlag öffnen
-    const envelope = document.getElementById("envelope");
+    const envelope =
+        document.getElementById("envelope");
 
     envelope.classList.add("open");
 
-
-    // Kurz warten, damit man den geöffneten
-    // Umschlag sehen kann
     setTimeout(function() {
 
-        // Intro-Seite anzeigen
         showPage("introPage");
 
     }, 1000);
