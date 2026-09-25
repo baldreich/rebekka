@@ -1278,6 +1278,44 @@ function showQuestion(questionId) {
     ).textContent =
         question.question;
 
+   /*
+   Hintergrundbild der Frage
+*/
+
+const background =
+    document.getElementById(
+        "questionBackground"
+    );
+
+
+if (question.image) {
+
+    background.style.backgroundImage =
+        `url("${question.image}")`;
+
+    background.classList.remove(
+        "visible"
+    );
+
+    setTimeout(function() {
+
+        background.classList.add(
+            "visible"
+        );
+
+    }, 50);
+
+} else {
+
+    background.style.backgroundImage =
+        "none";
+
+    background.classList.remove(
+        "visible"
+    );
+
+}
+
 
     /*
        Antwortbuttons
