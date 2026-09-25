@@ -626,67 +626,37 @@ h1 {
          STARTSEITE
     ================================================== -->
 
-    <section
-        id="introPage"
-        class="page"
-    >
+    <section id="start" class="page active">
 
-        <div class="subtitle">
-            A klenne Frog
-        </div>
-
-
-        <div
-            class="envelope-wrapper"
-            onclick="openEnvelope()"
-        >
-
-            <div
-                id="envelope"
-                class="envelope"
-            >
-
-                <div class="letter">
-                    Für di
+    <div class="envelope" id="envelope">
+        <div class="envelope-body">
+            <div class="letter">
+                <div class="letter-text">
+                    💌
                 </div>
-
-                <div class="flap"></div>
-
             </div>
-
         </div>
+    </div>
 
+    <h1>Bist du bereit?</h1>
 
-        <h1>
-            Bisch Ready?
-        </h1>
+    <div class="answers">
+        <button
+            class="answer-btn"
+            onclick="openIntro()"
+        >
+            JA
+        </button>
 
+        <button
+            class="answer-btn"
+            onclick="showWaiting()"
+        >
+            NOCH NICHT
+        </button>
+    </div>
 
-        <div class="buttons">
-
-            <!-- JA -->
-
-            <button
-                class="answer-btn"
-                onclick="openIntro()"
-            >
-                JO
-            </button>
-
-
-            <!-- NEIN -->
-
-            <button
-                class="answer-btn"
-                onclick="showWaiting()"
-            >
-                NO NET
-            </button>
-
-        </div>
-
-    </section>
-
+</section>
 
 
     <!-- =================================================
