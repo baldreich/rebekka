@@ -760,14 +760,12 @@ h1 {
         </div>
 
 
-        <button
-            class="answer-btn"
-            onclick="startGame('frage1')"
-        >
-
-            Weiter
-
-        </button>
+      <button
+    class="answer-btn"
+    onclick="openIntro()"
+>
+    Los
+</button>
 
     </section>
 
@@ -1125,30 +1123,22 @@ function showWaiting() {
 
 function openIntro() {
 
-    /*
-       Brief öffnen
-    */
+  function openIntro() {
 
-    const envelope =
-        document.getElementById("envelope");
+    // Umschlag öffnen
+    const envelope = document.getElementById("envelope");
 
     envelope.classList.add("open");
 
 
-    /*
-       Kurz warten, damit man
-       das Öffnen des Briefes sieht.
-    */
-
+    // Kurz warten, damit man den geöffneten
+    // Umschlag sehen kann
     setTimeout(function() {
 
-        transition(function() {
+        // Intro-Seite anzeigen
+        showPage("introPage");
 
-            showPage("introPage");
-
-        });
-
-    }, 900);
+    }, 1000);
 
 }
 
