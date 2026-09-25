@@ -703,35 +703,45 @@ h1 {
 <div id="app">
 
 
-    <!-- =================================================
-         STARTSEITE
-    ================================================== -->
+ /* =========================================================
+   STARTSEITE
+========================================================= */
 
-    <section id="start" class="page active">
+#start {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+}
 
-    <div class="envelope" id="envelope">
-    <img src="bri.png" alt="Briefumschlag" class="gucci-envelope">
-</div>
+#start.active {
+    display: flex;
+}
 
-    <h1>Gucci Girl - Ready?</h1>
+#start h1 {
+    display: block;
+    margin: 20px 0 25px;
 
-    <div class="answers">
-        <button
-            class="answer-btn"
-            onclick="openIntro()"
-        >
-            LOS
-        </button>
+    font-size:
+        clamp(32px, 7vw, 58px);
 
-        <button
-            class="answer-btn"
-            onclick="showWaiting()"
-        >
-            NO NET
-        </button>
-    </div>
+    line-height: 1.1;
 
-</section>
+    color: #eafff2;
+
+    text-shadow:
+        0 0 8px #00ff66,
+        0 0 18px rgba(0, 255, 120, 0.8),
+        0 0 35px rgba(0, 255, 120, 0.5);
+
+    position: relative;
+    z-index: 20;
+}
+
+#start .gucci-envelope {
+    max-height: 48vh;
+}
 
 
     <!-- =================================================
