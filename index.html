@@ -130,58 +130,28 @@ body {
    BRIEFUMSCHLAG
 ========================================================= */
 
-.envelope-wrapper {
-    cursor: pointer;
+.gucci-envelope {
+    width: min(90vw, 650px);
+    max-height: 60vh;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
 
-    display: inline-block;
-
-    margin-bottom: 35px;
-}
-
-.envelope {
-
-    position: relative;
-
-    width: 280px;
-    height: 180px;
-
-    margin: auto;
-
-    background:
-        linear-gradient(
-            145deg,
-            #12352a,
-            #061812
-        );
-
-    border:
-        1px solid
-        rgba(80, 255, 160, 0.4);
-
-    border-radius: 5px;
-
-    box-shadow:
-        0 0 20px
-        rgba(0, 255, 120, 0.12),
-
-        0 0 60px
-        rgba(0, 255, 120, 0.05);
+    filter:
+        drop-shadow(0 0 15px rgba(0, 255, 120, 0.35))
+        drop-shadow(0 0 35px rgba(0, 255, 120, 0.15));
 
     transition:
-        0.5s ease;
+        transform 1s ease,
+        opacity 0.8s ease,
+        filter 1s ease;
 }
 
-.envelope:hover {
-
-    transform:
-        translateY(-6px);
-
-    box-shadow:
-        0 0 30px
-        rgba(0, 255, 120, 0.25),
-
-        0 0 80px
-        rgba(0, 255, 120, 0.08);
+.envelope.open .gucci-envelope {
+    transform: scale(1.08);
+    filter:
+        drop-shadow(0 0 25px rgba(0, 255, 120, 0.7))
+        drop-shadow(0 0 60px rgba(0, 255, 120, 0.3));
 }
 
 
@@ -629,14 +599,8 @@ h1 {
     <section id="start" class="page active">
 
     <div class="envelope" id="envelope">
-        <div class="envelope-body">
-            <div class="letter">
-                <div class="letter-text">
-                    💌
-                </div>
-            </div>
-        </div>
-    </div>
+    <img src="bri.png" alt="Briefumschlag" class="gucci-envelope">
+</div>
 
     <h1>Gucci Girl - Ready?</h1>
 
