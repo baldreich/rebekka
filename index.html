@@ -1,1 +1,1204 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Eine kleine Frage</title>
+
+<style>
+/* =========================================================
+   GRUNDEINSTELLUNGEN
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #020806;
+    color: #eafff2;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* =========================================================
+   MATRIX-HINTERGRUND
+========================================================= */
+
+#matrixCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.35;
+}
+
+/* leichte Abdunklung */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0, 255, 120, 0.06),
+            rgba(0, 0, 0, 0.82) 70%
+        );
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+#app {
+    position: relative;
+    z-index: 5;
+    width: min(92vw, 700px);
+    text-align: center;
+}
+
+/* =========================================================
+   SEITEN
+========================================================= */
+
+.page {
+    display: none;
+    animation: pageIn 0.8s ease forwards;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+        filter: blur(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+/* =========================================================
+   BRIEF
+========================================================= */
+
+.envelope-wrapper {
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 35px;
+}
+
+.envelope {
+    position: relative;
+    width: 280px;
+    height: 180px;
+    margin: auto;
+
+    background: linear-gradient(
+        145deg,
+        #12352a,
+        #061812
+    );
+
+    border: 1px solid rgba(80, 255, 160, 0.4);
+
+    border-radius: 5px;
+
+    box-shadow:
+        0 0 20px rgba(0, 255, 120, 0.12),
+        0 0 60px rgba(0, 255, 120, 0.05);
+
+    transition: 0.5s ease;
+}
+
+.envelope:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 0 30px rgba(0, 255, 120, 0.25),
+        0 0 80px rgba(0, 255, 120, 0.08);
+}
+
+/* Umschlagklappe */
+
+.flap {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 0;
+    height: 0;
+
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 95px solid #1a4938;
+
+    transform-origin: top center;
+
+    transition: transform 0.9s ease;
+
+    z-index: 3;
+}
+
+/* Papier */
+
+.letter {
+    position: absolute;
+
+    width: 220px;
+    height: 130px;
+
+    left: 30px;
+    top: 20px;
+
+    background: #ecfff4;
+    color: #092017;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    border-radius: 3px;
+
+    transform: translateY(20px);
+
+    transition: transform 0.9s ease;
+
+    z-index: 1;
+}
+
+/* Umschlag wird geöffnet */
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+}
+
+.envelope.open .letter {
+    transform: translateY(-75px);
+}
+
+/* =========================================================
+   TEXTE
+========================================================= */
+
+.subtitle {
+    color: #80d8a5;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    margin: 0 0 15px;
+    font-size: clamp(32px, 7vw, 58px);
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 10px rgba(80, 255, 150, 0.3);
+}
+
+.question {
+    font-size: clamp(22px, 4vw, 32px);
+    line-height: 1.4;
+    margin: 20px 0 35px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    width: min(100%, 520px);
+    margin: auto;
+}
+
+.answer-btn {
+    position: relative;
+
+    border: 1px solid rgba(80, 255, 150, 0.35);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(20, 70, 45, 0.55),
+            rgba(5, 25, 18, 0.75)
+        );
+
+    color: #eafff2;
+
+    padding: 17px 22px;
+
+    border-radius: 8px;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.answer-btn:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(100, 255, 160, 0.8);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(30, 100, 60, 0.75),
+            rgba(10, 40, 25, 0.85)
+        );
+
+    box-shadow:
+        0 0 20px rgba(0, 255, 120, 0.12);
+}
+
+.answer-btn:active {
+    transform: scale(0.98);
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress {
+    position: fixed;
+
+    bottom: 25px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 10;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    color: rgba(150, 255, 190, 0.45);
+}
+
+/* =========================================================
+   MATRIX ÜBERGANG
+========================================================= */
+
+#transition {
+    position: fixed;
+    inset: 0;
+
+    background: #000;
+
+    z-index: 50;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    color: #42ff88;
+
+    font-family: monospace;
+
+    font-size: clamp(25px, 6vw, 60px);
+
+    letter-spacing: 5px;
+}
+
+#transition.show {
+    display: flex;
+    animation: transitionFlash 0.7s ease;
+}
+
+@keyframes transitionFlash {
+
+    0% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   WARTEN
+========================================================= */
+
+.waiting-text {
+    color: #9ce7b8;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .envelope {
+        width: 230px;
+        height: 150px;
+    }
+
+    .flap {
+        border-left-width: 115px;
+        border-right-width: 115px;
+        border-top-width: 80px;
+    }
+
+    .letter {
+        width: 180px;
+        height: 110px;
+        left: 25px;
+        top: 18px;
+        font-size: 15px;
+    }
+
+    .envelope.open .letter {
+        transform: translateY(-60px);
+    }
+
+    h1 {
+        font-size: 34px;
+    }
+
+    .question {
+        font-size: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =======================================================
+     MATRIX
+======================================================= -->
+
+<canvas id="matrixCanvas"></canvas>
+
+<div class="overlay"></div>
+
+
+<!-- =======================================================
+     APP
+======================================================= -->
+
+<div id="app">
+
+    <!-- START -->
+    <section id="start" class="page active">
+
+        <div class="subtitle">
+            Eine kleine Nachricht
+        </div>
+
+        <div
+            class="envelope-wrapper"
+            onclick="openEnvelope()"
+        >
+
+            <div
+                id="envelope"
+                class="envelope"
+            >
+
+                <div class="letter">
+                    Für dich
+                </div>
+
+                <div class="flap"></div>
+
+            </div>
+
+        </div>
+
+        <h1>Bist du bereit?</h1>
+
+        <div class="buttons">
+
+            <button
+                class="answer-btn"
+                onclick="startGame('frage1')"
+            >
+                JA
+            </button>
+
+            <button
+                class="answer-btn"
+                onclick="showWaiting()"
+            >
+                NOCH NICHT
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- WARTEN -->
+    <section id="waiting" class="page">
+
+        <div class="subtitle">
+            Kein Problem
+        </div>
+
+        <h1>Ich warte...</h1>
+
+        <p class="waiting-text">
+            Sag einfach Bescheid, wenn du bereit bist.
+        </p>
+
+        <button
+            class="answer-btn"
+            onclick="startGame('frage1')"
+        >
+            Jetzt bin ich bereit
+        </button>
+
+    </section>
+
+
+    <!-- FRAGEN -->
+    <section id="questionPage" class="page">
+
+        <div
+            id="questionNumber"
+            class="subtitle"
+        >
+        </div>
+
+        <div
+            id="questionText"
+            class="question"
+        >
+        </div>
+
+        <div
+            id="answers"
+            class="buttons"
+        >
+        </div>
+
+    </section>
+
+
+    <!-- ENDE -->
+    <section id="endPage" class="page">
+
+        <div class="subtitle">
+            Ende
+        </div>
+
+        <h1 id="endTitle">
+            Das war's.
+        </h1>
+
+        <p
+            id="endText"
+            class="question"
+        >
+            Danke, dass du mitgemacht hast.
+        </p>
+
+        <button
+            class="answer-btn"
+            onclick="location.reload()"
+        >
+            Nochmal
+        </button>
+
+    </section>
+
+</div>
+
+
+<div
+    id="transition"
+>
+    <span id="transitionText">010101</span>
+</div>
+
+
+<div
+    id="progress"
+    class="progress"
+>
+</div>
+
+
+<script>
+
+/* =========================================================
+   =========================================================
+   HIER DEFINIERST DU DEINE FRAGEN
+   =========================================================
+   =========================================================
+
+   Jede Frage bekommt:
+
+   id:
+       Eindeutiger Name
+
+   question:
+       Deine Frage
+
+   answers:
+       Die möglichen Antworten
+
+   text:
+       Text des Buttons
+
+   next:
+       ID der nächsten Frage
+
+   ---------------------------------------------------------
+
+   Beispiel:
+
+   frage1 → Antwort A → frage2
+          → Antwort B → frage3
+
+   =========================================================
+*/
+
+
+const questions = {
+
+    frage1: {
+
+        question:
+            "Wenn du spontan einen freien Abend hättest – was würdest du lieber machen?",
+
+        answers: [
+
+            {
+                text: "🍝 Essen gehen",
+                next: "frage2"
+            },
+
+            {
+                text: "🍹 Etwas trinken gehen",
+                next: "frage3"
+            },
+
+            {
+                text: "🎬 Einen Film schauen",
+                next: "frage4"
+            }
+
+        ]
+
+    },
+
+
+    frage2: {
+
+        question:
+            "Was wäre dir dabei lieber?",
+
+        answers: [
+
+            {
+                text: "Etwas Neues ausprobieren",
+                next: "frage5"
+            },
+
+            {
+                text: "Lieber etwas Bekanntes",
+                next: "frage6"
+            }
+
+        ]
+
+    },
+
+
+    frage3: {
+
+        question:
+            "Und was wäre dein Getränk der Wahl?",
+
+        answers: [
+
+            {
+                text: "🍸 Cocktail",
+                next: "frage5"
+            },
+
+            {
+                text: "🍺 Bier",
+                next: "frage6"
+            },
+
+            {
+                text: "☕ Kaffee",
+                next: "frage5"
+            }
+
+        ]
+
+    },
+
+
+    frage4: {
+
+        question:
+            "Welcher Film wäre spontan am interessantesten?",
+
+        answers: [
+
+            {
+                text: "😂 Etwas Lustiges",
+                next: "frage5"
+            },
+
+            {
+                text: "❤️ Etwas Romantisches",
+                next: "frage6"
+            },
+
+            {
+                text: "😱 Etwas Spannendes",
+                next: "frage5"
+            }
+
+        ]
+
+    },
+
+
+    frage5: {
+
+        question:
+            "Eine letzte Frage...",
+
+        answers: [
+
+            {
+                text: "Ich bin neugierig 😏",
+                next: "ende1"
+            },
+
+            {
+                text: "Jetzt wird es spannend...",
+                next: "ende2"
+            }
+
+        ]
+
+    },
+
+
+    frage6: {
+
+        question:
+            "Und wenn du wählen müsstest?",
+
+        answers: [
+
+            {
+                text: "Warum nicht?",
+                next: "ende1"
+            },
+
+            {
+                text: "Vielleicht...",
+                next: "ende2"
+            }
+
+        ]
+
+    }
+
+};
+
+
+/* =========================================================
+   ENDNACHRICHTEN
+   =========================================================
+
+   Auch diese kannst du komplett ändern.
+*/
+
+
+const endings = {
+
+    ende1: {
+
+        title: "Interessant...",
+
+        text:
+            "Vielleicht war das ja genau die Antwort, auf die ich gehofft habe. 😉"
+
+    },
+
+    ende2: {
+
+        title: "Das war's",
+
+        text:
+            "Danke, dass du dich darauf eingelassen hast. 😊"
+
+    }
+
+};
+
+
+/* =========================================================
+   SYSTEM
+========================================================= */
+
+let currentQuestion = 0;
+
+
+/* =========================================================
+   BRIEF ÖFFNEN
+========================================================= */
+
+function openEnvelope() {
+
+    const envelope =
+        document.getElementById("envelope");
+
+    envelope.classList.add("open");
+
+}
+
+
+/* =========================================================
+   WARTEN
+========================================================= */
+
+function showWaiting() {
+
+    showPage("waiting");
+
+}
+
+
+/* =========================================================
+   SPIEL STARTEN
+========================================================= */
+
+function startGame(questionId) {
+
+    transition(() => {
+
+        showQuestion(questionId);
+
+    });
+
+}
+
+
+/* =========================================================
+   FRAGE ANZEIGEN
+========================================================= */
+
+function showQuestion(questionId) {
+
+    const question =
+        questions[questionId];
+
+    if (!question) {
+
+        console.error(
+            "Frage nicht gefunden:",
+            questionId
+        );
+
+        return;
+
+    }
+
+    currentQuestion++;
+
+    document.getElementById(
+        "questionNumber"
+    ).textContent =
+        "FRAGE " +
+        String(currentQuestion).padStart(2, "0");
+
+
+    document.getElementById(
+        "questionText"
+    ).textContent =
+        question.question;
+
+
+    const answers =
+        document.getElementById("answers");
+
+    answers.innerHTML = "";
+
+
+    question.answers.forEach(answer => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "answer-btn";
+
+        button.textContent =
+            answer.text;
+
+        button.onclick = () => {
+
+            handleAnswer(answer.next);
+
+        };
+
+        answers.appendChild(button);
+
+    });
+
+
+    showPage("questionPage");
+
+
+    document.getElementById(
+        "progress"
+    ).textContent =
+        "FRAGE " +
+        currentQuestion;
+
+}
+
+
+/* =========================================================
+   ANTWORT
+========================================================= */
+
+function handleAnswer(next) {
+
+    if (endings[next]) {
+
+        transition(() => {
+
+            showEnding(next);
+
+        });
+
+        return;
+
+    }
+
+
+    if (questions[next]) {
+
+        transition(() => {
+
+            showQuestion(next);
+
+        });
+
+        return;
+
+    }
+
+
+    console.error(
+        "Ziel nicht gefunden:",
+        next
+    );
+
+}
+
+
+/* =========================================================
+   ENDE
+========================================================= */
+
+function showEnding(id) {
+
+    const ending =
+        endings[id];
+
+    document.getElementById(
+        "endTitle"
+    ).textContent =
+        ending.title;
+
+
+    document.getElementById(
+        "endText"
+    ).textContent =
+        ending.text;
+
+
+    document.getElementById(
+        "progress"
+    ).textContent =
+        "";
+
+
+    showPage("endPage");
+
+}
+
+
+/* =========================================================
+   SEITE WECHSELN
+========================================================= */
+
+function showPage(id) {
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
+
+            page.classList.remove("active");
+
+        });
+
+
+    const page =
+        document.getElementById(id);
+
+    page.classList.add("active");
+
+}
+
+
+/* =========================================================
+   MATRIX ÜBERGANG
+========================================================= */
+
+function transition(callback) {
+
+    const transitionElement =
+        document.getElementById("transition");
+
+    const text =
+        document.getElementById("transitionText");
+
+
+    text.textContent =
+        randomMatrixText();
+
+
+    transitionElement.classList.remove("show");
+
+
+    void transitionElement.offsetWidth;
+
+
+    transitionElement.classList.add("show");
+
+
+    setTimeout(() => {
+
+        callback();
+
+    }, 350);
+
+}
+
+
+/* =========================================================
+   MATRIX-ZUFALLSTEXT
+========================================================= */
+
+function randomMatrixText() {
+
+    const chars =
+        "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    let result = "";
+
+    for (
+        let i = 0;
+        i < 12;
+        i++
+    ) {
+
+        result +=
+            chars[
+                Math.floor(
+                    Math.random() *
+                    chars.length
+                )
+            ];
+
+    }
+
+    return result;
+
+}
+
+
+/* =========================================================
+   MATRIX-HINTERGRUND
+========================================================= */
+
+const canvas =
+    document.getElementById(
+        "matrixCanvas"
+    );
+
+const ctx =
+    canvas.getContext("2d");
+
+
+let width;
+let height;
+let columns;
+let drops;
+
+
+function resizeMatrix() {
+
+    width =
+        canvas.width =
+        window.innerWidth;
+
+    height =
+        canvas.height =
+        window.innerHeight;
+
+
+    const fontSize = 14;
+
+    columns =
+        Math.floor(
+            width / fontSize
+        );
+
+
+    drops =
+        Array(columns)
+            .fill(1);
+
+}
+
+
+resizeMatrix();
+
+
+window.addEventListener(
+    "resize",
+    resizeMatrix
+);
+
+
+function drawMatrix() {
+
+    ctx.fillStyle =
+        "rgba(0, 0, 0, 0.08)";
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    ctx.font =
+        "14px monospace";
+
+
+    for (
+        let i = 0;
+        i < drops.length;
+        i++
+    ) {
+
+        const chars =
+            "01アイウエオカキクケコ";
+
+        const char =
+            chars[
+                Math.floor(
+                    Math.random() *
+                    chars.length
+                )
+            ];
+
+
+        const x =
+            i * 14;
+
+        const y =
+            drops[i] * 14;
+
+
+        ctx.fillStyle =
+            "rgba(50, 255, 130, 0.7)";
+
+
+        ctx.fillText(
+            char,
+            x,
+            y
+        );
+
+
+        if (
+            y > height &&
+            Math.random() > 0.975
+        ) {
+
+            drops[i] = 0;
+
+        }
+
+
+        drops[i]++;
+
+    }
+
+}
+
+
+setInterval(
+    drawMatrix,
+    45
+);
+
+</script>
+
+</body>
+</html>
